@@ -3,18 +3,21 @@ import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { to: "/", label: "Beranda" },
+const privateNavItems = [
   { to: "/search", label: "Cari Villa" },
   { to: "/my-bookings", label: "Booking Saya" },
 ];
 
 export function Navbar() {
   const { theme, toggle } = useTheme();
+  const { isLoggedIn, user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const navItems = isLoggedIn ? privateNavItems : [];
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-lg">
@@ -47,13 +50,15 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            to="/search"
-            className="hidden h-10 items-center gap-2 rounded-full border border-border bg-muted/40 px-4 text-sm text-muted-foreground transition-colors hover:bg-muted md:flex"
-          >
-            <Search className="h-4 w-4" />
-            <span>Cari villa cepat...</span>
-          </Link>
+          {isLoggedIn && (
+            <Link
+              to="/search"
+              className="hidden h-10 items-center gap-2 rounded-full border border-border bg-muted/40 px-4 text-sm text-muted-foreground transition-colors hover:bg-muted md:flex"
+            >
+              <Search className="h-4 w-4" />
+              <span>Cari villa cepat...</span>
+            </Link>
+          )}
           <button
             onClick={toggle}
             aria-label="Toggle theme"
@@ -61,14 +66,25 @@ export function Navbar() {
           >
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
-          <Link to="/login" className="hidden md:block">
-            <Button variant="ghost" size="sm">
-              Login
-            </Button>
-          </Link>
-          <Link to="/login" className="hidden md:block">
-            <Button size="sm">Register</Button>
-          </Link>
+          {isLoggedIn ? (
+            <div className="hidden items-center gap-2 md:flex">
+              <span className="text-sm font-medium text-foreground">Hi, {user?.name.split(" ")[0]}</span>
+              <Button variant="outline" size="sm" onClick={logout}>
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="hidden md:block">
+                <Button variant="ghost" size="sm">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/login" className="hidden md:block">
+                <Button size="sm">Register</Button>
+              </Link>
+            </>
+          )}
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
@@ -93,14 +109,29 @@ export function Navbar() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2">
-              <Link to="/login" className="flex-1" onClick={() => setOpen(false)}>
-                <Button variant="outline" className="w-full">
-                  Login
+              {isLoggedIn ? (
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    logout();
+                    setOpen(false);
+                  }}
+                >
+                  Logout
                 </Button>
-              </Link>
-              <Link to="/login" className="flex-1" onClick={() => setOpen(false)}>
-                <Button className="w-full">Register</Button>
-              </Link>
+              ) : (
+                <>
+                  <Link to="/login" className="flex-1" onClick={() => setOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/login" className="flex-1" onClick={() => setOpen(false)}>
+                    <Button className="w-full">Register</Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BadgeCheck, HeadphonesIcon, Quote, ShieldCheck, Sparkles, Tag } from "lucide-react";
 import { SiteLayout } from "@/components/site/site-layout";
 import { SearchBar } from "@/components/site/search-bar";
@@ -6,6 +6,7 @@ import { VillaCard } from "@/components/site/villa-card";
 import { DestinationCard } from "@/components/site/destination-card";
 import { destinations, testimonials, villas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -19,7 +20,13 @@ const perks = [
 ];
 
 function Index() {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   const featured = villas.slice(0, 8);
+
+  const goToSearch = () => {
+    navigate({ to: isLoggedIn ? "/search" : "/login" });
+  };
   return (
     <SiteLayout>
       {/* HERO */}
@@ -59,15 +66,16 @@ function Index() {
               Area favorit para traveler di Pulau Dewata.
             </p>
           </div>
-          <Link to="/search" className="hidden text-sm font-semibold text-primary hover:underline sm:block">
+          <button
+            onClick={goToSearch}
+            className="hidden text-sm font-semibold text-primary hover:underline sm:block"
+          >
             Lihat semua →
-          </Link>
+          </button>
         </div>
-        <div className="mt-8 -mx-4 flex snap-x gap-5 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0">
-          {destinations.map((d) => (
-            <div key={d.name} className="snap-start">
-              <DestinationCard {...d} />
-            </div>
+        <div className="mt-8 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          {destinations.slice(0, 4).map((d) => (
+            <DestinationCard key={d.name} {...d} />
           ))}
         </div>
       </section>
@@ -81,13 +89,13 @@ function Index() {
               Pilihan villa dengan rating terbaik dari tamu.
             </p>
           </div>
-          <Link to="/search">
-            <Button variant="outline" className="rounded-full">Lihat Semua Villa</Button>
-          </Link>
+          <Button variant="outline" className="rounded-full" onClick={goToSearch}>
+            Lihat Semua Villa
+          </Button>
         </div>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {featured.map((v) => (
-            <VillaCard key={v.id} villa={v} />
+            <VillaCard key={v.id} villa={v} requireAuth={!isLoggedIn} />
           ))}
         </div>
       </section>

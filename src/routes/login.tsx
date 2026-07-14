@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site/site-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/login")({
@@ -13,6 +14,17 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const displayName = mode === "register" ? name : email.split("@")[0];
+    login(displayName || "User", email);
+    navigate({ to: "/" });
+  };
   return (
     <SiteLayout>
       <div className="mx-auto flex max-w-5xl gap-8 px-4 py-16 sm:px-6 lg:px-8">
@@ -28,6 +40,25 @@ function LoginPage() {
 
         <div className="mx-auto w-full max-w-md">
           <div className="rounded-3xl border border-border bg-card p-8 shadow-soft">
+
+            {/* DEMO LOGIN BANNER */}
+            <div className="mb-6 rounded-2xl border border-dashed border-primary/40 bg-primary/5 p-4">
+              <p className="text-xs font-bold uppercase tracking-wider text-primary">🧪 Mode Demo</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Klik tombol di bawah untuk langsung masuk tanpa isi form.
+              </p>
+              <Button
+                type="button"
+                className="mt-3 w-full rounded-xl"
+                onClick={() => {
+                  login("Demo User", "demo@balivio.id");
+                  navigate({ to: "/search" });
+                }}
+              >
+                ⚡ Demo Login — Masuk Langsung
+              </Button>
+            </div>
+
             <div className="flex rounded-2xl bg-muted p-1">
               {(["login", "register"] as const).map((m) => (
                 <button
@@ -43,20 +74,30 @@ function LoginPage() {
               ))}
             </div>
 
-            <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               {mode === "register" && (
                 <div className="space-y-2">
                   <Label>Nama Lengkap</Label>
-                  <Input placeholder="Nama kamu" />
+                  <Input
+                    placeholder="Nama kamu"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </div>
               )}
               <div className="space-y-2">
                 <Label>Email</Label>
-                <Input type="email" placeholder="email@balivio.id" />
+                <Input
+                  type="email"
+                  placeholder="email@balivio.id"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
               <div className="space-y-2">
                 <Label>Password</Label>
-                <Input type="password" placeholder="••••••••" />
+                <Input type="password" placeholder="••••••••" required />
               </div>
               <Button type="submit" size="lg" className="w-full rounded-2xl">
                 {mode === "login" ? "Masuk" : "Buat Akun"}
@@ -77,6 +118,7 @@ function LoginPage() {
             </p>
           </div>
         </div>
+
       </div>
     </SiteLayout>
   );

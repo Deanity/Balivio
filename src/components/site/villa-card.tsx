@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Heart, MapPin, Star } from "lucide-react";
 import { useState } from "react";
 import { AmenityIcon } from "./amenity-icon";
@@ -6,10 +6,19 @@ import { formatIDR, type Villa } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-export function VillaCard({ villa, layout = "grid" }: { villa: Villa; layout?: "grid" | "list" }) {
+export function VillaCard({ villa, layout = "grid", requireAuth = false }: { villa: Villa; layout?: "grid" | "list"; requireAuth?: boolean }) {
   const [imgIdx, setImgIdx] = useState(0);
   const [liked, setLiked] = useState(false);
   const list = layout === "list";
+  const navigate = useNavigate();
+
+  const handleDetail = () => {
+    if (requireAuth) {
+      navigate({ to: "/login" });
+    } else {
+      navigate({ to: "/villa/$slug", params: { slug: villa.slug } });
+    }
+  };
 
   return (
     <article
@@ -99,11 +108,9 @@ export function VillaCard({ villa, layout = "grid" }: { villa: Villa; layout?: "
               <span className="ml-1 text-xs font-normal text-muted-foreground">/ malam</span>
             </p>
           </div>
-          <Link to="/villa/$slug" params={{ slug: villa.slug }}>
-            <Button size="sm" className="rounded-full">
-              Lihat Detail
-            </Button>
-          </Link>
+          <Button size="sm" className="rounded-full" onClick={handleDetail}>
+            Lihat Detail
+          </Button>
         </div>
       </div>
     </article>
