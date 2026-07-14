@@ -116,7 +116,7 @@ function VillaDetail() {
           <div className="overflow-hidden rounded-3xl sm:col-span-2 sm:row-span-2">
             <img src={villa.images[activeImage]} alt={villa.name} className="h-72 w-full object-cover sm:h-full" />
           </div>
-          {villa.images.slice(0, 4).map((img, i) => (
+          {villa.images.slice(0, 4).map((img: string, i: number) => (
             <button
               key={i}
               onClick={() => setActiveImage(i)}
@@ -146,7 +146,7 @@ function VillaDetail() {
             <section>
               <h2 className="text-xl font-bold">Fasilitas</h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                {villa.amenities.map((a) => (
+                {villa.amenities.map((a: string) => (
                   <div key={a} className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3 shadow-card">
                     <span className="grid h-9 w-9 place-items-center rounded-xl bg-info/30 text-primary">
                       <AmenityIcon id={a} className="h-4 w-4" />
@@ -207,7 +207,7 @@ function VillaDetail() {
                 <span className="text-sm font-semibold text-primary">{villa.rating} / 5 ({villa.reviewCount} review)</span>
               </div>
               <div className="mt-4 grid gap-4 md:grid-cols-2">
-                {villa.reviews.map((r, i) => (
+                {villa.reviews.map((r: (typeof villa.reviews)[number], i: number) => (
                   <div key={i} className="rounded-2xl border border-border bg-card p-5 shadow-card">
                     <div className="flex items-center justify-between">
                       <div>
