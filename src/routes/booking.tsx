@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { Building2, CheckCircle2, CreditCard, Download, Landmark, Smartphone, Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SiteLayout } from "@/components/site/site-layout";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { getStoredUser } from "@/hooks/use-auth";
 
 type Search = {
   villa?: string;
@@ -27,6 +28,9 @@ export const Route = createFileRoute("/booking")({
     step: typeof s.step === "number" ? s.step : Number(s.step) || 0,
   }),
   component: BookingPage,
+  beforeLoad: () => {
+    if (!getStoredUser()) throw redirect({ to: "/login" });
+  },
 });
 
 const STEPS = ["Ringkasan & Data Diri", "Pembayaran", "Konfirmasi"];

@@ -13,10 +13,19 @@ const AuthContext = createContext<AuthCtx | null>(null);
 
 const STORAGE_KEY = "balivio-user";
 
+/** Baca sesi dari localStorage secara sinkron — dipakai untuk route guards (beforeLoad) */
+export const getStoredUser = (): User | null => {
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    return saved ? (JSON.parse(saved) as User) : null;
+  } catch {
+    return null;
+  }
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
-  // Baca dari localStorage saat mount
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem(STORAGE_KEY);

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Filter, SlidersHorizontal, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SiteLayout } from "@/components/site/site-layout";
@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { getStoredUser } from "@/hooks/use-auth";
 
 type Search = {
   location?: string;
@@ -32,6 +33,9 @@ export const Route = createFileRoute("/search")({
     sort: (s.sort as Search["sort"]) ?? "recommended",
   }),
   component: SearchPage,
+  beforeLoad: () => {
+    if (!getStoredUser()) throw redirect({ to: "/login" });
+  },
 });
 
 const villaTypes = ["Private Villa", "Boutique Villa", "Family Villa", "Luxury Villa"] as const;

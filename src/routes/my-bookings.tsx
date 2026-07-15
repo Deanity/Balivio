@@ -1,12 +1,16 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { CalendarDays, MapPin, Users } from "lucide-react";
 import { SiteLayout } from "@/components/site/site-layout";
 import { formatIDR, getVillaById, mockBookings } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getStoredUser } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/my-bookings")({
   head: () => ({ meta: [{ title: "Booking Saya — Balivio" }, { name: "robots", content: "noindex" }] }),
+  beforeLoad: () => {
+    if (!getStoredUser()) throw redirect({ to: "/login" });
+  },
   component: MyBookings,
 });
 

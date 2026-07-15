@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ export function Navbar() {
   const { theme, toggle } = useTheme();
   const { isLoggedIn, user, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   const navItems = isLoggedIn ? privateNavItems : [];
@@ -22,12 +23,15 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2">
+        <button
+          onClick={() => navigate({ to: isLoggedIn ? "/search" : "/" })}
+          className="flex items-center gap-2"
+        >
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground font-bold">
             B
           </span>
           <span className="text-lg font-bold tracking-tight">Balivio</span>
-        </Link>
+        </button>
 
         <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => {

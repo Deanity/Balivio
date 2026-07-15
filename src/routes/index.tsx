@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { BadgeCheck, HeadphonesIcon, Quote, ShieldCheck, Sparkles, Tag } from "lucide-react";
 import { SiteLayout } from "@/components/site/site-layout";
 import { SearchBar } from "@/components/site/search-bar";
@@ -6,9 +6,12 @@ import { VillaCard } from "@/components/site/villa-card";
 import { DestinationCard } from "@/components/site/destination-card";
 import { destinations, testimonials, villas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth, getStoredUser } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/")({
+  beforeLoad: () => {
+    if (getStoredUser()) throw redirect({ to: "/search" });
+  },
   component: Index,
 });
 
