@@ -17,6 +17,10 @@ const envSchema = z.object({
   XENDIT_WEBHOOK_TOKEN: z.string().min(1, 'XENDIT_WEBHOOK_TOKEN is required'),
   XENDIT_SUCCESS_REDIRECT_URL: z.string().url(),
   XENDIT_FAILURE_REDIRECT_URL: z.string().url(),
+
+  // Resend (Email Service)
+  RESEND_API_KEY: z.string().default('your_resend_api_key_here'),
+  RESEND_FROM_EMAIL: z.string().email().default('Balivio <noreply@balivio.id>'),
 });
 
 const parsed = envSchema.safeParse(process.env);

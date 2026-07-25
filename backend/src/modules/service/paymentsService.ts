@@ -9,11 +9,12 @@
  */
 
 import { Xendit } from 'xendit-node';
-import { db, payments, bookings, villaAvailability } from '@/db';
+import { db, payments, bookings, villaAvailability, villas } from '@/db';
 import { eq, and } from 'drizzle-orm';
 import { env } from '@/config/env';
-import { eachDayOfInterval, format } from 'date-fns';
+import { eachDayOfInterval, format, differenceInCalendarDays } from 'date-fns';
 import type { InitiatePaymentDto } from '@/modules/schema/paymentsSchema';
+import { sendBookingConfirmationEmail } from '@/utils/emailService';
 
 const xenditClient = new Xendit({ secretKey: env.XENDIT_SECRET_KEY });
 
@@ -191,6 +192,38 @@ export async function handleWebhook(
               set: { status: 'booked' },
             });
         }
+
+        // Send booking confirmation email via Resend
+        const [villa] = await tx.select({ name: villas.name, address: villas.address })
+          .from(villas).where(eq(villas.id, booking.villaId!)).limit(1);
+
+        const nights = differenceInCalendarDays(
+          new Date(booking.checkOut),
+          new Date(booking.checkIn)
+        );
+        const total = parseFloat(booking.totalPrice);
+        const subtotal = parseFloat(booking.subtotal);
+        const serviceFee = parseFloat(booking.serviceFee);
+        const taxFee = total - subtotal - serviceFee;
+
+        // Fire and forget — don't block webhook response on email send
+        sendBookingConfirmationEmail({
+          customerName: booking.customerName ?? 'Tamu Balivio',
+          customerEmail: booking.customerEmail,
+          bookingCode: booking.bookingCode,
+          villaName: villa?.name ?? 'Villa Balivio',
+          villaLocation: villa?.address ?? 'Bali',
+          checkIn: booking.checkIn,
+          checkOut: booking.checkOut,
+          nights,
+          guests: booking.guestsCount ?? 1,
+          subtotal,
+          serviceFee,
+          taxFee,
+          totalPrice: total,
+          paymentMethod: payment.paymentMethod,
+          paymentCode: payment.paymentCode,
+        }).catch((err: unknown) => console.error('Email send failed (non-blocking):', err));
       }
     });
   } else if (isFailed) {
