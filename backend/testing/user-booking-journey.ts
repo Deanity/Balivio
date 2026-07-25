@@ -24,7 +24,12 @@ const BASE_URL     = 'http://localhost:3001/api/v1';
 const WEBHOOK_TOKEN = process.env.XENDIT_WEBHOOK_TOKEN ?? 'TU22QBhFQ9Cf820ifCBJMPF200a8aK10cSqdTCP8DeOcW4qX';
 
 // ── Guest persona ──────────────────────────────────────────────
-const TARGET_EMAIL = process.env.TEST_EMAIL ?? 'deanityv@gmail.com';
+const TARGET_EMAIL = process.env.TEST_EMAIL ?? 'dendradetama2@gmail.com';
+
+// Generate dynamic dates (30-90 days in future) to avoid calendar conflicts
+const randomOffset = Math.floor(Math.random() * 60) + 30;
+const checkInDate  = new Date(Date.now() + randomOffset * 86400000);
+const checkOutDate = new Date(checkInDate.getTime() + 3 * 86400000);
 
 const BUDI = {
   name:     'Deanity (Budi)',
@@ -32,8 +37,8 @@ const BUDI = {
   password: 'BudiBali2026!',
   phone:    '+628123456789',
   guests:   2,
-  checkIn:  '2026-10-05',
-  checkOut: '2026-10-08',  // 3 malam
+  checkIn:  checkInDate.toISOString().slice(0, 10),
+  checkOut: checkOutDate.toISOString().slice(0, 10),
   notes:    'Kami honeymoon, minta kamar didekorasi bunga jika bisa 🌸',
 };
 
@@ -139,6 +144,19 @@ async function main() {
     if (existingUser) {
       guestUserId = existingUser.id;
       await supabaseAdmin.auth.admin.updateUserById(existingUser.id, { password: BUDI.password });
+      
+      const { users } = await import('@/db');
+      await db.insert(users).values({
+        id: existingUser.id,
+        email: BUDI.email,
+        displayName: BUDI.name,
+        phone: BUDI.phone,
+        role: 'guest',
+        status: 'active',
+      }).onConflictDoUpdate({
+        target: users.id,
+        set: { displayName: BUDI.name, phone: BUDI.phone },
+      });
     }
   } else {
     const regJson = await assertOk(regRes, 'Registrasi akun Budi');
