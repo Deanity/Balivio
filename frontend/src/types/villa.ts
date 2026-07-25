@@ -16,6 +16,7 @@ export interface Villa {
   area: 'Canggu' | 'Ubud' | 'Seminyak' | 'Uluwatu' | 'Sanur' | 'Nusa Dua';
   pricePerNight: number;
   originalPricePerNight?: number;
+  discountPercentage?: string;
   rating: number;
   reviewCount: number;
   bedrooms: number;

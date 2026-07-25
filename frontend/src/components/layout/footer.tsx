@@ -1,83 +1,87 @@
 import React from 'react';
 import Link from 'next/link';
-import { SITE_CONFIG } from '@/constants/siteConfig';
-import { Palmtree, MapPin, Phone, Mail, Globe, Share2, ShieldCheck } from 'lucide-react';
+import { Palmtree, Globe, Share2, Mail, Compass } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-[#0B3B36] text-white pt-16 pb-12 border-t border-emerald-900">
+    <footer className="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-          {/* Brand Info */}
-          <div className="space-y-4 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold">
-                <Palmtree className="w-5 h-5" />
+          {/* Col 1: Brand Info */}
+          <div className="space-y-4">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#0D5C54] text-white flex items-center justify-center font-bold">
+                <Palmtree className="w-4 h-4 text-emerald-300" />
               </div>
-              <span className="text-2xl font-bold tracking-tight text-white">{SITE_CONFIG.name}</span>
+              <span className="text-xl font-bold tracking-tight text-slate-900">Balivio</span>
             </Link>
-            <p className="text-emerald-100/70 text-sm leading-relaxed">
-              {SITE_CONFIG.description}
+            <p className="text-slate-500 text-xs leading-relaxed max-w-xs">
+              Platform booking villa terpercaya di Bali. Temukan villa impianmu dengan harga terbaik.
             </p>
-            <div className="flex items-center gap-3 pt-2 text-emerald-200">
-              <a href={SITE_CONFIG.social.instagram} target="_blank" rel="noreferrer" className="hover:text-emerald-400 p-2 bg-emerald-900/50 rounded-lg transition-colors">
-                <Globe className="w-5 h-5" />
+            <div className="flex items-center gap-2 pt-1 text-slate-400">
+              <a href="#" aria-label="Globe" className="p-2 hover:text-[#0D5C54] hover:bg-slate-100 rounded-full transition-colors">
+                <Globe className="w-4 h-4" />
               </a>
-              <a href={SITE_CONFIG.social.facebook} target="_blank" rel="noreferrer" className="hover:text-emerald-400 p-2 bg-emerald-900/50 rounded-lg transition-colors">
-                <Share2 className="w-5 h-5" />
+              <a href="#" aria-label="Share" className="p-2 hover:text-[#0D5C54] hover:bg-slate-100 rounded-full transition-colors">
+                <Share2 className="w-4 h-4" />
+              </a>
+              <a href="#" aria-label="Mail" className="p-2 hover:text-[#0D5C54] hover:bg-slate-100 rounded-full transition-colors">
+                <Mail className="w-4 h-4" />
+              </a>
+              <a href="#" aria-label="Explore" className="p-2 hover:text-[#0D5C54] hover:bg-slate-100 rounded-full transition-colors">
+                <Compass className="w-4 h-4" />
               </a>
             </div>
           </div>
 
-          {/* Destinasi Populer */}
+          {/* Col 2: Tentang */}
           <div className="space-y-3">
-            <h4 className="text-base font-semibold text-emerald-300 tracking-wide uppercase text-xs">Destinasi Villa</h4>
-            <ul className="space-y-2 text-sm text-emerald-100/80">
-              <li><Link href="/searchVilla?location=Canggu" className="hover:text-white transition-colors">Villa Canggu</Link></li>
-              <li><Link href="/searchVilla?location=Ubud" className="hover:text-white transition-colors">Villa Ubud</Link></li>
-              <li><Link href="/searchVilla?location=Seminyak" className="hover:text-white transition-colors">Villa Seminyak</Link></li>
-              <li><Link href="/searchVilla?location=Uluwatu" className="hover:text-white transition-colors">Villa Uluwatu</Link></li>
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Tentang</h4>
+            <ul className="space-y-2 text-xs text-slate-600">
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Tentang Balivio</Link></li>
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Karir</Link></li>
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Press Kit</Link></li>
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Blog</Link></li>
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Col 3: Bantuan */}
           <div className="space-y-3">
-            <h4 className="text-base font-semibold text-emerald-300 tracking-wide uppercase text-xs">Tautan Cepat</h4>
-            <ul className="space-y-2 text-sm text-emerald-100/80">
-              <li><Link href="/searchVilla" className="hover:text-white transition-colors">Cari Semua Villa</Link></li>
-              <li><Link href="/#mengapa" className="hover:text-white transition-colors">Jaminan Terbaik Balivio</Link></li>
-              <li><Link href="/bookingSaya" className="hover:text-white transition-colors">Cek Booking Saya</Link></li>
-              <li><Link href="/login" className="hover:text-white transition-colors">Mode Demo Login</Link></li>
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Bantuan</h4>
+            <ul className="space-y-2 text-xs text-slate-600">
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Pusat Bantuan</Link></li>
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Kebijakan Privasi</Link></li>
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Syarat & Ketentuan</Link></li>
+              <li><Link href="#" className="hover:text-[#0D5C54] transition-colors">Kontak Kami</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Col 4: Kontak & Metode Pembayaran */}
           <div className="space-y-3">
-            <h4 className="text-base font-semibold text-emerald-300 tracking-wide uppercase text-xs">Hubungi Kami</h4>
-            <ul className="space-y-2.5 text-sm text-emerald-100/80">
-              <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>{SITE_CONFIG.address}</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>{SITE_CONFIG.supportPhone}</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>{SITE_CONFIG.supportEmail}</span>
-              </li>
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Kontak</h4>
+            <ul className="space-y-1.5 text-xs text-slate-600">
+              <li className="font-medium text-slate-900">support@balivio.id</li>
+              <li>+62 361 123 4567</li>
+              <li>Kuta, Bali, Indonesia</li>
             </ul>
+
+            <div className="pt-3">
+              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-2">Metode pembayaran</span>
+              <div className="flex flex-wrap gap-1.5 text-[10px] font-bold text-slate-500">
+                <span className="bg-slate-100 px-2 py-1 rounded border border-slate-200">VISA</span>
+                <span className="bg-slate-100 px-2 py-1 rounded border border-slate-200">MC</span>
+                <span className="bg-slate-100 px-2 py-1 rounded border border-slate-200">BCA</span>
+                <span className="bg-slate-100 px-2 py-1 rounded border border-slate-200">QRIS</span>
+                <span className="bg-slate-100 px-2 py-1 rounded border border-slate-200">GOPAY</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Bottom copyright & UI disclaimer */}
-        <div className="pt-8 border-t border-emerald-900/60 flex flex-col md:flex-row items-center justify-between text-xs text-emerald-100/50 gap-4">
-          <p>© 2026 {SITE_CONFIG.name}. Hak Cipta Dilindungi.</p>
-          <div className="flex items-center gap-2 bg-emerald-900/30 px-3 py-1.5 rounded-full border border-emerald-800/40">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Fase Tampilan UI Only (Demo Replikasi Visual)</span>
-          </div>
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+          <p>© 2026 Balivio. All rights reserved.</p>
+          <p>Dibuat dengan <span className="text-red-500">❤</span> untuk Bali</p>
         </div>
       </div>
     </footer>

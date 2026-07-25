@@ -2,76 +2,71 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { Search, MapPin, Calendar, Users, ShieldCheck } from 'lucide-react';
+import Image from 'next/image';
+import { Search, MapPin, Calendar, Users, Zap } from 'lucide-react';
 
 export function HeroSection() {
   const router = useRouter();
   const [location, setLocation] = useState('');
+  const [checkIn, setCheckIn] = useState('2026-07-16');
+  const [checkOut, setCheckOut] = useState('2026-07-17');
   const [guests, setGuests] = useState('2');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(`/searchVilla?location=${encodeURIComponent(location)}&guests=${guests}`);
+    router.push(`/searchVilla?location=${encodeURIComponent(location)}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`);
   };
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center bg-gradient-to-b from-emerald-950 via-[#0B3B36] to-[#0D5C54] text-white pt-10 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#10B981_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+    <section className="relative min-h-[88vh] flex items-center justify-center text-white px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+      {/* High Quality Bali Ocean Cliff Villa Background Image */}
+      <Image
+        src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=2000&q=80"
+        alt="Bali Villa Cliff Ocean View"
+        fill
+        priority
+        className="object-cover object-center"
+      />
 
-      <div className="relative max-w-5xl mx-auto text-center space-y-8 z-10">
+      {/* Subtle Dark Gradient Overlay for Readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-slate-950/20 z-0" />
+
+      {/* Content Container */}
+      <div className="relative max-w-5xl mx-auto text-left w-full space-y-8 z-10 pt-6">
         {/* Top Tagline Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 bg-emerald-800/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-emerald-500/30 text-emerald-200 text-xs sm:text-sm font-medium"
-        >
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Garansi Harga Terbaik & 100% Villa Terverifikasi Bali</span>
-        </motion.div>
+        <div>
+          <span className="inline-flex items-center gap-2 bg-emerald-500/90 text-slate-950 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
+            <Zap className="w-4 h-4 fill-slate-950" />
+            <span>Promo Spesial Hingga 20% Off</span>
+          </span>
+        </div>
 
         {/* Hero Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight"
-        >
-          Temukan Private Pool Villa <br />
-          <span className="text-emerald-400">Impian Anda di Bali</span>
-        </motion.h1>
+        <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-[1.1] max-w-3xl">
+          Rasakan liburan <br />
+          sempurna di villa terbaik <br />
+          <span className="text-white">Bali.</span>
+        </h1>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-base sm:text-lg text-emerald-100/80 max-w-2xl mx-auto font-normal leading-relaxed"
-        >
-          Ribuan pilihan villa mewah di Canggu, Ubud, Seminyak & Uluwatu dengan kolam renang pribadi, pemandangan indah, dan layanan kelas dunia.
-        </motion.p>
+        <p className="text-base sm:text-lg text-slate-100/90 max-w-2xl font-normal leading-relaxed">
+          Mulai dari villa private pool, retreat pegunungan, hingga cliff top suite — semuanya bisa kamu booking dalam hitungan menit.
+        </p>
 
-        {/* Search Bar Container */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-8 bg-white/95 backdrop-blur-xl p-3 sm:p-4 rounded-3xl shadow-2xl border border-white/20 text-slate-900 max-w-4xl mx-auto"
-        >
-          <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
-            {/* Location Select */}
-            <div className="flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-2xl border border-slate-200/80 hover:border-emerald-500 transition-colors">
-              <MapPin className="w-5 h-5 text-[#0D5C54] shrink-0" />
+        {/* Search Bar Container matching photo */}
+        <div className="mt-10 bg-white/95 backdrop-blur-md p-3 sm:p-4 rounded-3xl shadow-2xl border border-white/20 text-slate-900 max-w-4xl">
+          <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-9 gap-3 items-center">
+            {/* Field 1: Lokasi */}
+            <div className="sm:col-span-3 flex items-center gap-3 px-3 py-2 bg-slate-50/80 rounded-2xl border border-slate-200/80 hover:border-[#0D5C54] transition-colors">
+              <MapPin className="w-5 h-5 text-slate-400 shrink-0" />
               <div className="flex flex-col text-left w-full">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Lokasi</label>
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">LOKASI</label>
                 <select
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="bg-transparent text-sm font-semibold text-slate-800 focus:outline-none w-full cursor-pointer"
+                  className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
                 >
-                  <option value="">Semua Lokasi Bali</option>
+                  <option value="">Canggu, Ubud, Seminyak...</option>
                   <option value="Canggu">Canggu</option>
                   <option value="Ubud">Ubud</option>
                   <option value="Seminyak">Seminyak</option>
@@ -80,43 +75,63 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Check-In / Out Dummy Input */}
-            <div className="flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-2xl border border-slate-200/80 hover:border-emerald-500 transition-colors">
-              <Calendar className="w-5 h-5 text-[#0D5C54] shrink-0" />
-              <div className="flex flex-col text-left">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tanggal Stay</label>
-                <span className="text-sm font-semibold text-slate-800 whitespace-nowrap">Pilih Tanggal</span>
-              </div>
-            </div>
-
-            {/* Guests Select */}
-            <div className="flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-2xl border border-slate-200/80 hover:border-emerald-500 transition-colors">
-              <Users className="w-5 h-5 text-[#0D5C54] shrink-0" />
+            {/* Field 2: Check-In */}
+            <div className="sm:col-span-2 flex items-center gap-2.5 px-3 py-2 bg-slate-50/80 rounded-2xl border border-slate-200/80 hover:border-[#0D5C54] transition-colors">
+              <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
               <div className="flex flex-col text-left w-full">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Jumlah Tamu</label>
-                <select
-                  value={guests}
-                  onChange={(e) => setGuests(e.target.value)}
-                  className="bg-transparent text-sm font-semibold text-slate-800 focus:outline-none w-full cursor-pointer"
-                >
-                  <option value="1">1 Tamu</option>
-                  <option value="2">2 Tamu (Pasangan)</option>
-                  <option value="4">4 Tamu (Keluarga)</option>
-                  <option value="6">6+ Tamu (Rombongan)</option>
-                </select>
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">CHECK-IN</label>
+                <input
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                  className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
+                />
               </div>
             </div>
 
-            {/* Search Button */}
-            <button
-              type="submit"
-              className="w-full bg-[#0D5C54] hover:bg-[#0A4842] text-white py-3.5 px-6 rounded-2xl font-bold text-sm shadow-lg hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-2 group"
-            >
-              <Search className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span>Cari Villa</span>
-            </button>
+            {/* Field 3: Check-Out */}
+            <div className="sm:col-span-2 flex items-center gap-2.5 px-3 py-2 bg-slate-50/80 rounded-2xl border border-slate-200/80 hover:border-[#0D5C54] transition-colors">
+              <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
+              <div className="flex flex-col text-left w-full">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">CHECK-OUT</label>
+                <input
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                  className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
+                />
+              </div>
+            </div>
+
+            {/* Field 4 & Button: Tamu + Cari Villa Button */}
+            <div className="sm:col-span-2 flex items-center gap-2">
+              <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-slate-50/80 rounded-2xl border border-slate-200/80">
+                <Users className="w-4 h-4 text-slate-400 shrink-0" />
+                <div className="flex flex-col text-left w-full">
+                  <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">TAMU</label>
+                  <select
+                    value={guests}
+                    onChange={(e) => setGuests(e.target.value)}
+                    className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
+                  >
+                    <option value="1">1 Tamu</option>
+                    <option value="2">2 Tamu</option>
+                    <option value="4">4 Tamu</option>
+                    <option value="6">6+ Tamu</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="bg-[#0D5C54] hover:bg-[#0A4842] text-white py-3.5 px-5 rounded-2xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 shrink-0"
+              >
+                <Search className="w-4 h-4" />
+                <span>Cari Villa</span>
+              </button>
+            </div>
           </form>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
