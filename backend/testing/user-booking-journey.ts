@@ -24,9 +24,11 @@ const BASE_URL     = 'http://localhost:3001/api/v1';
 const WEBHOOK_TOKEN = process.env.XENDIT_WEBHOOK_TOKEN ?? 'TU22QBhFQ9Cf820ifCBJMPF200a8aK10cSqdTCP8DeOcW4qX';
 
 // ── Guest persona ──────────────────────────────────────────────
+const TARGET_EMAIL = process.env.TEST_EMAIL ?? 'deanityv@gmail.com';
+
 const BUDI = {
-  name:     'Budi Santoso',
-  email:    `budi.santoso.${Date.now()}@gmail.com`,
+  name:     'Deanity (Budi)',
+  email:    TARGET_EMAIL,
   password: 'BudiBali2026!',
   phone:    '+628123456789',
   guests:   2,
@@ -120,7 +122,7 @@ async function main() {
   hr('CHAPTER 1 — REGISTRASI & LOGIN');
   // ──────────────────────────────────────────────────────────
 
-  step('📝', `Budi membuat akun baru di Balivio...`);
+  step('📝', `Membuat atau menyiapkan akun untuk ${BUDI.email}...`);
 
   const regRes = await api('POST', '/auth/register', {
     displayName: BUDI.name,
@@ -128,11 +130,23 @@ async function main() {
     password:    BUDI.password,
     phone:       BUDI.phone,
   });
-  const regJson = await assertOk(regRes, 'Registrasi akun Budi');
-  const regData = regJson['data'] as Record<string, unknown>;
-  const regUser = (regData['user'] as Record<string, unknown>) ?? {};
-  guestUserId = (regUser['id'] as string) ?? '';
-  ok(`Akun berhasil dibuat! User ID: ${guestUserId}`);
+
+  if (regRes.status === 409 || regRes.status === 400) {
+    ok(`Email ${BUDI.email} sudah terdaftar. Mengatur ulang password untuk testing...`);
+    const { supabaseAdmin } = await import('@/config/supabase');
+    const { data: usersData } = await supabaseAdmin.auth.admin.listUsers();
+    const existingUser = usersData?.users?.find(u => u.email === BUDI.email);
+    if (existingUser) {
+      guestUserId = existingUser.id;
+      await supabaseAdmin.auth.admin.updateUserById(existingUser.id, { password: BUDI.password });
+    }
+  } else {
+    const regJson = await assertOk(regRes, 'Registrasi akun Budi');
+    const regData = regJson['data'] as Record<string, unknown>;
+    const regUser = (regData['user'] as Record<string, unknown>) ?? {};
+    guestUserId = (regUser['id'] as string) ?? '';
+    ok(`Akun berhasil dibuat! User ID: ${guestUserId}`);
+  }
 
   step('🔑', 'Budi login ke Balivio...');
   const loginRes = await api('POST', '/auth/login', {

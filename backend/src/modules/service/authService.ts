@@ -22,7 +22,7 @@ export async function register(dto: RegisterDto): Promise<{
   });
 
   if (error) {
-    if (error.message.toLowerCase().includes('already registered')) {
+    if (error.message.toLowerCase().includes('already')) {
       const conflict = new Error('Email already registered') as Error & {
         statusCode: number;
       };
