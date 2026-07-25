@@ -8,8 +8,11 @@ import { Palmtree, Globe, Share2, Mail, Compass } from 'lucide-react';
 export function Footer() {
   const pathname = usePathname();
 
-  // Hide footer on dashboard page
-  if (pathname === '/dashboard') {
+  // Footer ONLY appears on Landing Page ('/') and Auth Page ('/login')
+  const isLandingPage = pathname === '/';
+  const isAuthPage = pathname === '/login' || pathname?.startsWith('/login');
+
+  if (!isLandingPage && !isAuthPage) {
     return null;
   }
 
