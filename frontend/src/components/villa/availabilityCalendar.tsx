@@ -1,64 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Calendar as CalendarIcon, CheckCircle2 } from 'lucide-react';
+import React from 'react';
 
 interface AvailabilityCalendarProps {
   onDateSelect?: (checkIn: string, checkOut: string) => void;
 }
 
 export function AvailabilityCalendar({ onDateSelect }: AvailabilityCalendarProps) {
-  const [selectedDates, setSelectedDates] = useState({
-    checkIn: '2026-08-10',
-    checkOut: '2026-08-13',
-  });
+  // Calendar matrix days matching reference photo
+  const daysOfWeek = ['Su', 'Mo', 'Th', 'We', 'Th', 'Fr', 'Sa'];
 
-  const handleSelect = (checkIn: string, checkOut: string) => {
-    setSelectedDates({ checkIn, checkOut });
-    if (onDateSelect) {
-      onDateSelect(checkIn, checkOut);
-    }
-  };
+  const calendarDays = [
+    28, 29, 1, 2, 3, 5, 6,
+    7, 8, 9, 10, 11, 12, 13,
+    14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27,
+    28, 29, 30, 31, 1, 2, 3
+  ];
 
   return (
-    <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200/80 space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
-          <CalendarIcon className="w-5 h-5 text-[#0D5C54]" />
-          <span>Kalender Ketersediaan Tanggal</span>
-        </div>
-        <span className="text-xs text-emerald-800 bg-emerald-100 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
-          <CheckCircle2 className="w-3.5 h-3.5 text-[#0D5C54]" /> Kuota Agustus Tersedia
-        </span>
-      </div>
+    <div className="space-y-4">
+      <h2 className="text-lg sm:text-xl font-extrabold text-slate-900">
+        Ketersediaan
+      </h2>
 
-      <div className="grid grid-cols-2 gap-3 bg-white p-4 rounded-2xl border border-slate-200">
-        <div>
-          <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-            Check-In
-          </label>
-          <input
-            type="date"
-            value={selectedDates.checkIn}
-            onChange={(e) => handleSelect(e.target.value, selectedDates.checkOut)}
-            className="w-full text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer"
-          />
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-4 max-w-xl">
+        {/* Days of week header */}
+        <div className="grid grid-cols-7 gap-2 text-center text-xs font-extrabold text-slate-700 pb-2">
+          {daysOfWeek.map((day, idx) => (
+            <div key={idx} className="py-1">
+              {day}
+            </div>
+          ))}
         </div>
-        <div className="border-l border-slate-200 pl-3">
-          <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-            Check-Out
-          </label>
-          <input
-            type="date"
-            value={selectedDates.checkOut}
-            onChange={(e) => handleSelect(selectedDates.checkIn, e.target.value)}
-            className="w-full text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer"
-          />
+
+        {/* Calendar days grid */}
+        <div className="grid grid-cols-7 gap-2.5">
+          {calendarDays.map((dayNum, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => {
+                if (onDateSelect) {
+                  onDateSelect('2026-07-12', '2026-07-15');
+                }
+              }}
+              suppressHydrationWarning
+              className="bg-[#E6F7F4] hover:bg-[#D3F1EC] text-[#0D5C54] font-extrabold text-xs py-3.5 rounded-2xl text-center transition-colors shadow-2xs"
+            >
+              {dayNum}
+            </button>
+          ))}
         </div>
       </div>
-      <p className="text-xs text-slate-500 italic">
-        *Minimal menginap 1 malam. Harga diskon otomatis dihitung di rincian booking.
-      </p>
     </div>
   );
 }

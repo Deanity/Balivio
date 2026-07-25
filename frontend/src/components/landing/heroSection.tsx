@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Search, MapPin, Calendar, Users, Zap } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export function HeroSection() {
   const router = useRouter();
@@ -12,9 +13,16 @@ export function HeroSection() {
   const [checkOut, setCheckOut] = useState('2026-07-17');
   const [guests, setGuests] = useState('2');
 
+  const { isLoggedIn } = useAuth();
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(`/searchVilla?location=${encodeURIComponent(location)}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`);
+    const searchUrl = `/dashboard?tab=search&location=${encodeURIComponent(location)}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`;
+    if (!isLoggedIn) {
+      router.push(`/login?redirect=${encodeURIComponent(searchUrl)}`);
+    } else {
+      router.push(searchUrl);
+    }
   };
 
   return (

@@ -3,9 +3,10 @@ import './globals.css';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { SITE_CONFIG } from '@/constants/siteConfig';
+import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
-  title: `${SITE_CONFIG.name} ${SITE_CONFIG.tagline}`,
+  title: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
   description: SITE_CONFIG.description,
 };
 
@@ -17,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="id" className="scroll-smooth" suppressHydrationWarning>
       <body className="flex flex-col min-h-screen bg-[#FAFAF9]" suppressHydrationWarning>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

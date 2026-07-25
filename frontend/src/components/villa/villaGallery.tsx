@@ -12,14 +12,17 @@ interface VillaGalleryProps {
 export function VillaGallery({ title, images }: VillaGalleryProps) {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
+  // Fallback to repeating images if less than 5
+  const displayImages = images.length >= 5 ? images : [...images, ...images, ...images].slice(0, 5);
+
   return (
-    <div>
-      {/* Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden shadow-sm relative">
-        {/* Main Big Photo */}
-        <div className="md:col-span-2 relative aspect-[4/3] md:aspect-auto md:h-[420px] bg-slate-100 group overflow-hidden">
+    <div className="relative">
+      {/* Grid Layout matching photo */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Left Column: Main Big Photo with rounded-3xl */}
+        <div className="relative aspect-[4/3] md:h-[400px] w-full rounded-3xl overflow-hidden bg-slate-100 group shadow-xs">
           <Image
-            src={images[0]}
+            src={displayImages[0]}
             alt={`${title} 1`}
             fill
             priority
@@ -29,10 +32,13 @@ export function VillaGallery({ title, images }: VillaGalleryProps) {
           />
         </div>
 
-        {/* Side Thumbnails */}
-        <div className="hidden md:grid md:col-span-2 grid-cols-2 gap-3 h-[420px]">
-          {images.slice(1, 5).map((img, idx) => (
-            <div key={idx} className="relative w-full h-full bg-slate-100 group overflow-hidden">
+        {/* Right Column: 2x2 Grid of 4 Thumbnails with rounded-2xl */}
+        <div className="grid grid-cols-2 gap-4 h-[400px]">
+          {displayImages.slice(1, 5).map((img, idx) => (
+            <div
+              key={idx}
+              className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-100 group shadow-xs"
+            >
               <Image
                 src={img}
                 alt={`${title} ${idx + 2}`}
@@ -44,22 +50,13 @@ export function VillaGallery({ title, images }: VillaGalleryProps) {
             </div>
           ))}
         </div>
-
-        {/* View All Photos Button */}
-        <button
-          onClick={() => setIsOpenModal(true)}
-          className="absolute bottom-4 right-4 bg-white/90 hover:bg-white text-slate-900 text-xs font-bold px-4 py-2.5 rounded-2xl shadow-lg backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105"
-        >
-          <Grid className="w-4 h-4 text-[#0D5C54]" />
-          <span>Lihat Semua Foto ({images.length})</span>
-        </button>
       </div>
 
-      {/* Modal Lightbox */}
+      {/* Lightbox Modal */}
       {isOpenModal && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col p-4 sm:p-8 animate-in fade-in">
           <div className="flex justify-between items-center text-white mb-4">
-            <h3 className="font-bold text-lg">{title} - Galeri Foto</h3>
+            <h3 className="font-bold text-lg">{title} — Galeri Foto</h3>
             <button
               onClick={() => setIsOpenModal(false)}
               className="p-2 hover:bg-white/10 rounded-full transition-colors"

@@ -1,8 +1,18 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Palmtree, Globe, Share2, Mail, Compass } from 'lucide-react';
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Hide footer on dashboard page
+  if (pathname === '/dashboard') {
+    return null;
+  }
+
   return (
     <footer className="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

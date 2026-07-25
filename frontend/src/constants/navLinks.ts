@@ -5,8 +5,8 @@ export interface NavLink {
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'Beranda', href: '/' },
-  { label: 'Cari Villa', href: '/searchVilla' },
+  { label: 'Cari Villa', href: '/dashboard?tab=search' },
   { label: 'Destinasi', href: '/#destinasi' },
   { label: 'Mengapa Balivio', href: '/#mengapa' },
-  { label: 'Booking Saya', href: '/bookingSaya' },
+  { label: 'Booking Saya', href: '/dashboard?tab=bookings' },
 ];

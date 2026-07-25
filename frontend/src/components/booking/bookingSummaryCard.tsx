@@ -1,9 +1,9 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import { Villa } from '@/types/villa';
 import { formatCurrency } from '@/lib/formatCurrency';
-import { RatingBadge } from '../shared/ratingBadge';
-import { MapPin, Calendar, Users, ShieldCheck } from 'lucide-react';
 
 interface BookingSummaryCardProps {
   villa: Villa;
@@ -13,11 +13,13 @@ interface BookingSummaryCardProps {
   guests: number;
   subtotal: number;
   serviceFee: number;
-  discount: number;
+  discount?: number;
   totalPrice: number;
   onProceed?: () => void;
   buttonLabel?: string;
   isSticky?: boolean;
+  onGuestChange?: (newCount: number) => void;
+  variant?: 'detail' | 'checkout';
 }
 
 export function BookingSummaryCard({
@@ -28,96 +30,141 @@ export function BookingSummaryCard({
   guests,
   subtotal,
   serviceFee,
-  discount,
+  discount = 0,
   totalPrice,
   onProceed,
-  buttonLabel = 'Lanjut ke Booking',
-  isSticky = false,
+  buttonLabel = 'Booking Sekarang',
+  isSticky = true,
+  variant = 'detail',
 }: BookingSummaryCardProps) {
-  return (
-    <div
-      className={`bg-white p-6 rounded-3xl border border-slate-200/80 shadow-lg space-y-6 ${
-        isSticky ? 'sticky top-24' : ''
-      }`}
-    >
-      {/* Villa Mini Header */}
-      <div className="flex gap-4 pb-5 border-b border-slate-100">
-        <div className="relative w-24 h-20 rounded-2xl overflow-hidden bg-slate-100 shrink-0">
-          <Image src={villa.images[0]} alt={villa.title} fill className="object-cover" />
-        </div>
-        <div className="space-y-1">
-          <RatingBadge rating={villa.rating} reviewCount={villa.reviewCount} />
-          <h4 className="font-bold text-slate-900 text-base line-clamp-1">{villa.title}</h4>
-          <div className="flex items-center gap-1 text-slate-500 text-xs font-medium">
-            <MapPin className="w-3.5 h-3.5 text-[#0D5C54]" />
-            <span>{villa.area}, Bali</span>
-          </div>
-        </div>
-      </div>
 
-      {/* Stay Details */}
-      <div className="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-xs">
-        <div className="flex justify-between items-center text-slate-700">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-[#0D5C54]" />
-            <span>Tanggal Stay:</span>
+  const formatDisplayDate = (dateStr: string) => {
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    } catch {
+      return dateStr;
+    }
+  };
+
+  const taxFee = 930000;
+  const calculatedTotal = subtotal + serviceFee + taxFee - discount;
+
+  // Checkout Variant matching 3 booking step photos
+  if (variant === 'checkout') {
+    return (
+      <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-5 sticky top-24">
+        {/* Header with Thumbnail & Villa Metadata */}
+        <div className="flex items-start gap-4 pb-4 border-b border-slate-100">
+          <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-slate-100 shrink-0">
+            <Image src={villa.images[0]} alt={villa.title} fill className="object-cover" />
           </div>
-          <span className="font-semibold text-slate-900">
-            {checkIn} - {checkOut} ({nights} Malam)
+          <div className="space-y-0.5">
+            <span className="text-[11px] font-bold text-slate-400 block">Boutique Villa</span>
+            <h3 className="font-extrabold text-slate-900 text-sm">{villa.title}</h3>
+            <p className="text-xs text-slate-500 font-medium">{villa.location}</p>
+          </div>
+        </div>
+
+        {/* Stay Summary Lines matching photo */}
+        <div className="space-y-2 text-xs font-medium text-slate-600">
+          <div className="flex justify-between">
+            <span className="text-slate-500">Check-in</span>
+            <span className="font-semibold text-slate-900">{formatDisplayDate(checkIn)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500">Check-out</span>
+            <span className="font-semibold text-slate-900">{formatDisplayDate(checkOut)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500">Tamu</span>
+            <span className="font-semibold text-slate-900">{guests} orang</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500">Durasi</span>
+            <span className="font-semibold text-slate-900">{nights} malam</span>
+          </div>
+        </div>
+
+        <div className="border-t border-slate-100 pt-3 space-y-2 text-xs text-slate-600">
+          <div className="flex justify-between">
+            <span>{formatCurrency(villa.pricePerNight)} × {nights}</span>
+            <span className="font-semibold text-slate-900">{formatCurrency(subtotal)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Biaya layanan</span>
+            <span className="font-semibold text-slate-900">{formatCurrency(serviceFee)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Pajak</span>
+            <span className="font-semibold text-slate-900">{formatCurrency(taxFee)}</span>
+          </div>
+        </div>
+
+        <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
+          <span className="font-extrabold text-slate-900 text-sm">Total</span>
+          <span className="text-base font-black text-[#0D5C54]">
+            {formatCurrency(calculatedTotal)}
           </span>
         </div>
-        <div className="flex justify-between items-center text-slate-700 pt-2 border-t border-slate-200/60">
-          <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-[#0D5C54]" />
-            <span>Jumlah Tamu:</span>
-          </div>
-          <span className="font-semibold text-slate-900">{guests} Tamu</span>
-        </div>
+      </div>
+    );
+  }
+
+  // Detail Variant matching Villa Detail page
+  return (
+    <div
+      className={`bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-xl space-y-6 ${
+        isSticky ? 'sticky top-24 z-30' : ''
+      }`}
+    >
+      {/* Price Per Night Tag */}
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-2xl font-extrabold text-[#0D5C54]">
+          {formatCurrency(villa.pricePerNight)}
+        </span>
+        <span className="text-xs text-slate-400 font-normal">/ malam</span>
       </div>
 
       {/* Price Calculation Breakdown */}
       <div className="space-y-2.5 text-xs text-slate-600">
         <div className="flex justify-between">
-          <span>
-            {formatCurrency(villa.pricePerNight)} x {nights} malam
-          </span>
+          <span>Subtotal ({nights} malam)</span>
           <span className="font-medium text-slate-900">{formatCurrency(subtotal)}</span>
         </div>
 
         <div className="flex justify-between">
-          <span>Biaya Layanan & Kebersihan</span>
+          <span>Biaya layanan</span>
           <span className="font-medium text-slate-900">{formatCurrency(serviceFee)}</span>
         </div>
 
-        {discount > 0 && (
-          <div className="flex justify-between text-emerald-700 font-medium">
-            <span>Diskon Promo Special</span>
-            <span>-{formatCurrency(discount)}</span>
-          </div>
-        )}
+        <div className="flex justify-between">
+          <span>Pajak</span>
+          <span className="font-medium text-slate-900">{formatCurrency(123000)}</span>
+        </div>
 
-        <div className="pt-3 border-t border-slate-200 flex justify-between items-baseline">
-          <span className="text-sm font-bold text-slate-900">Total Pembayaran</span>
-          <span className="text-xl font-extrabold text-[#0D5C54]">
-            {formatCurrency(totalPrice)}
+        <div className="pt-3 border-t border-slate-100 flex justify-between items-center">
+          <span className="font-bold text-slate-900">Total</span>
+          <span className="text-lg font-black text-[#0D5C54]">
+            {formatCurrency(subtotal + serviceFee + 123000)}
           </span>
         </div>
       </div>
 
-      {/* Action Button */}
+      {/* Main Action Button */}
       {onProceed && (
         <button
           onClick={onProceed}
-          className="w-full bg-[#0D5C54] hover:bg-[#0A4842] text-white py-3.5 px-4 rounded-2xl font-bold text-sm shadow-md hover:shadow-lg transition-all text-center block"
+          suppressHydrationWarning
+          className="w-full bg-[#0D5C54] hover:bg-[#0A4842] text-white py-3.5 px-4 rounded-full font-extrabold text-sm shadow-md transition-colors text-center block"
         >
           {buttonLabel}
         </button>
       )}
-
-      <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium pt-1">
-        <ShieldCheck className="w-4 h-4 text-emerald-600" />
-        <span>Garansi Booking Langsung & Bebas Penipuan</span>
-      </div>
     </div>
   );
 }

@@ -2,10 +2,13 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Palmtree, Globe, Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { Palmtree, Globe, Menu, X, LogOut, Ticket } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, isLoggedIn, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 transition-all">
@@ -31,19 +34,57 @@ export function Navbar() {
             <span>IDR</span>
           </button>
 
-          <Link
-            href="/login"
-            className="text-sm font-semibold text-slate-700 hover:text-[#0D5C54] px-3 py-2 transition-colors"
-          >
-            Login
-          </Link>
+          {isLoggedIn && user ? (
+            <div className="flex items-center gap-4">
+              <Link
+                href="/dashboard?tab=bookings"
+                className="flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#0D5C54] transition-colors bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-full"
+              >
+                <Ticket className="w-3.5 h-3.5 text-[#0D5C54]" />
+                <span>Booking Saya</span>
+              </Link>
 
-          <Link
-            href="/login?mode=register"
-            className="bg-[#0D5C54] hover:bg-[#0A4842] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-sm hover:shadow transition-all"
-          >
-            Register
-          </Link>
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 pl-2 border-l border-slate-200 hover:opacity-80 transition-opacity"
+              >
+                <div className="relative w-8 h-8 rounded-full overflow-hidden border border-emerald-500 shrink-0">
+                  <Image
+                    src={user.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}
+                    alt={user.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <span className="text-xs font-extrabold text-slate-900">{user.name}</span>
+              </Link>
+
+              <button
+                onClick={logout}
+                title="Logout"
+                suppressHydrationWarning
+                className="p-1.5 text-slate-400 hover:text-red-500 rounded-full hover:bg-slate-50 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-sm font-semibold text-slate-700 hover:text-[#0D5C54] px-3 py-2 transition-colors"
+              >
+                Login
+              </Link>
+
+              <Link
+                href="/login?mode=register"
+                className="bg-[#0D5C54] hover:bg-[#0A4842] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-sm hover:shadow transition-all"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -67,22 +108,55 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 pt-1">
-            <Link
-              href="/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center py-2.5 border border-slate-200 hover:bg-slate-50 rounded-full text-xs font-bold text-slate-800 transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              href="/login?mode=register"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center py-2.5 bg-[#0D5C54] hover:bg-[#0A4842] rounded-full text-xs font-bold text-white shadow-sm transition-colors"
-            >
-              Register
-            </Link>
-          </div>
+          {isLoggedIn && user ? (
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center gap-3 p-2 bg-slate-50 rounded-2xl border border-slate-200">
+                <div className="relative w-9 h-9 rounded-full overflow-hidden border border-emerald-500 shrink-0">
+                  <Image src={user.avatar || ''} alt={user.name} fill className="object-cover" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-extrabold text-slate-900 truncate">{user.name}</p>
+                  <p className="text-[10px] text-slate-400 truncate">{user.email}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <Link
+                  href="/dashboard?tab=bookings"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full text-center py-2.5 bg-slate-100 rounded-full text-xs font-bold text-slate-800 transition-colors"
+                >
+                  Booking Saya
+                </Link>
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-center py-2.5 bg-red-50 text-red-600 border border-red-200 rounded-full text-xs font-bold transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <Link
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full text-center py-2.5 border border-slate-200 hover:bg-slate-50 rounded-full text-xs font-bold text-slate-800 transition-colors"
+              >
+                Login
+              </Link>
+              <Link
+                href="/login?mode=register"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full text-center py-2.5 bg-[#0D5C54] hover:bg-[#0A4842] rounded-full text-xs font-bold text-white shadow-sm transition-colors"
+              >
+                Register
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </header>

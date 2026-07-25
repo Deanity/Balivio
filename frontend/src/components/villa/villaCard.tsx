@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Villa } from '@/types/villa';
 import { formatCurrency } from '@/lib/formatCurrency';
 import { MapPin, Users, Bed, Bath, Wifi, Heart, Star } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 interface VillaCardProps {
   villa: Villa;
@@ -14,6 +16,18 @@ interface VillaCardProps {
 
 export function VillaCard({ villa, showBadge = true }: VillaCardProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
+
+  const detailUrl = `/villa/${villa.slug}`;
+  const targetUrl = isLoggedIn ? detailUrl : `/login?redirect=${encodeURIComponent(detailUrl)}`;
+
+  const handleNavigate = (e: React.MouseEvent) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      router.push(targetUrl);
+    }
+  };
 
   return (
     <div className="group bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
@@ -72,7 +86,7 @@ export function VillaCard({ villa, showBadge = true }: VillaCardProps) {
         <div className="space-y-1">
           {/* Title & Rating */}
           <div className="flex items-start justify-between gap-2">
-            <Link href={`/villa/${villa.slug}`}>
+            <Link href={targetUrl} onClick={handleNavigate}>
               <h3 className="font-extrabold text-slate-900 text-base group-hover:text-[#0D5C54] transition-colors line-clamp-1">
                 {villa.title}
               </h3>
@@ -127,7 +141,8 @@ export function VillaCard({ villa, showBadge = true }: VillaCardProps) {
           </div>
 
           <Link
-            href={`/villa/${villa.slug}`}
+            href={targetUrl}
+            onClick={handleNavigate}
             className="bg-[#0D5C54] hover:bg-[#0A4842] text-white text-xs font-bold px-4 py-2 rounded-xl transition-colors shadow-sm"
           >
             Lihat Detail
