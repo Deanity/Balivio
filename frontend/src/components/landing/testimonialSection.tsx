@@ -7,8 +7,8 @@ import { Quote } from 'lucide-react';
 
 export function TestimonialSection() {
   return (
-    <section className="py-20 bg-white px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">

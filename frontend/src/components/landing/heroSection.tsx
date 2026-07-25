@@ -18,7 +18,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[88vh] flex items-center justify-center text-white px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+    <section className="relative min-h-[88vh] flex items-center text-white py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* High Quality Bali Ocean Cliff Villa Background Image */}
       <Image
         src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=2000&q=80"
@@ -31,8 +31,8 @@ export function HeroSection() {
       {/* Subtle Dark Gradient Overlay for Readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-slate-950/20 z-0" />
 
-      {/* Content Container */}
-      <div className="relative max-w-5xl mx-auto text-left w-full space-y-8 z-10 pt-6">
+      {/* Content Container aligned 100% with max-w-7xl px-4 sm:px-6 lg:px-8 */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left w-full space-y-8 z-10">
         {/* Top Tagline Badge */}
         <div>
           <span className="inline-flex items-center gap-2 bg-emerald-500/90 text-slate-950 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
@@ -53,7 +53,7 @@ export function HeroSection() {
           Mulai dari villa private pool, retreat pegunungan, hingga cliff top suite — semuanya bisa kamu booking dalam hitungan menit.
         </p>
 
-        {/* Search Bar Container matching photo */}
+        {/* Search Bar Container matching 8-point grid layout */}
         <div className="mt-10 bg-white/95 backdrop-blur-md p-3 sm:p-4 rounded-3xl shadow-2xl border border-white/20 text-slate-900 max-w-4xl">
           <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-9 gap-3 items-center">
             {/* Field 1: Lokasi */}
@@ -64,6 +64,7 @@ export function HeroSection() {
                 <select
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
+                  suppressHydrationWarning
                   className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
                 >
                   <option value="">Canggu, Ubud, Seminyak...</option>
@@ -84,6 +85,7 @@ export function HeroSection() {
                   type="date"
                   value={checkIn}
                   onChange={(e) => setCheckIn(e.target.value)}
+                  suppressHydrationWarning
                   className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
                 />
               </div>
@@ -98,6 +100,7 @@ export function HeroSection() {
                   type="date"
                   value={checkOut}
                   onChange={(e) => setCheckOut(e.target.value)}
+                  suppressHydrationWarning
                   className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
                 />
               </div>
@@ -112,6 +115,7 @@ export function HeroSection() {
                   <select
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
+                    suppressHydrationWarning
                     className="bg-transparent text-xs font-bold text-slate-900 focus:outline-none w-full cursor-pointer"
                   >
                     <option value="1">1 Tamu</option>
@@ -124,6 +128,7 @@ export function HeroSection() {
 
               <button
                 type="submit"
+                suppressHydrationWarning
                 className="bg-[#0D5C54] hover:bg-[#0A4842] text-white py-3.5 px-5 rounded-2xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 shrink-0"
               >
                 <Search className="w-4 h-4" />

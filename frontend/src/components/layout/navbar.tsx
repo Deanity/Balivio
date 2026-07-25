@@ -24,6 +24,7 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-6">
           <button
             title="Mata Uang (IDR)"
+            suppressHydrationWarning
             className="p-2 text-slate-600 hover:text-[#0D5C54] rounded-full hover:bg-slate-50 transition-colors flex items-center gap-1.5 text-xs font-semibold"
           >
             <Globe className="w-4 h-4 text-slate-500" />

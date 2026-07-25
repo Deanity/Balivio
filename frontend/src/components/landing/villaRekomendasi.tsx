@@ -7,8 +7,8 @@ import { VillaCard } from '../villa/villaCard';
 
 export function VillaRekomendasi() {
   return (
-    <section className="py-16 bg-white px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Header & View All Button */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-1">

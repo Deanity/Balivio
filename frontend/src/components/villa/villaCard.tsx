@@ -59,6 +59,7 @@ export function VillaCard({ villa, showBadge = true }: VillaCardProps) {
             e.preventDefault();
             setIsLiked(!isLiked);
           }}
+          suppressHydrationWarning
           className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-700 hover:text-red-500 transition-colors shadow-sm"
           aria-label="Wishlist"
         >
