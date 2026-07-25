@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { SITE_CONFIG } from '@/constants/siteConfig';
 
 export const metadata: Metadata = {
-  title: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
+  title: `${SITE_CONFIG.name} ${SITE_CONFIG.tagline}`,
   description: SITE_CONFIG.description,
 };
 

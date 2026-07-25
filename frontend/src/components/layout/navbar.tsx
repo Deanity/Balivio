@@ -28,7 +28,7 @@ export function Navbar() {
             className="p-2 text-slate-600 hover:text-[#0D5C54] rounded-full hover:bg-slate-50 transition-colors flex items-center gap-1.5 text-xs font-semibold"
           >
             <Globe className="w-4 h-4 text-slate-500" />
-            <span>IDR (Rp)</span>
+            <span>IDR</span>
           </button>
 
           <Link
@@ -51,6 +51,7 @@ export function Navbar() {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden p-2 text-slate-700 hover:text-[#0D5C54]"
           aria-label="Toggle Navigation"
+          suppressHydrationWarning
         >
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -58,35 +59,26 @@ export function Navbar() {
 
       {/* Mobile Dropdown Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 shadow-lg animate-in slide-in-from-top-2">
-          <nav className="flex flex-col gap-3">
-            <Link
-              href="/searchVilla"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-slate-700 hover:text-[#0D5C54] font-medium py-1 text-base"
-            >
-              Cari Villa
-            </Link>
-            <Link
-              href="/bookingSaya"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-slate-700 hover:text-[#0D5C54] font-medium py-1 text-base"
-            >
-              Booking Saya
-            </Link>
-          </nav>
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+        <div className="md:hidden bg-white border-b border-slate-200 px-4 py-5 space-y-4 shadow-xl animate-in slide-in-from-top-2">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+              <Globe className="w-4 h-4 text-[#0D5C54]" />
+              <span>Mata Uang: <strong>IDR (Rp)</strong></span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 pt-1">
             <Link
               href="/login"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm font-bold text-slate-800"
+              className="w-full text-center py-2.5 border border-slate-200 hover:bg-slate-50 rounded-full text-xs font-bold text-slate-800 transition-colors"
             >
               Login
             </Link>
             <Link
               href="/login?mode=register"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm bg-[#0D5C54] text-white px-5 py-2 rounded-full font-bold"
+              className="w-full text-center py-2.5 bg-[#0D5C54] hover:bg-[#0A4842] rounded-full text-xs font-bold text-white shadow-sm transition-colors"
             >
               Register
             </Link>

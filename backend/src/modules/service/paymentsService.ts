@@ -1,7 +1,7 @@
 /**
  * paymentsService.ts
  *
- * Uses Xendit Invoice API — the recommended approach for xendit-node v6.
+ * Uses Xendit Invoice API the recommended approach for xendit-node v6.
  * Guest is redirected to a Xendit-hosted checkout page where they choose
  * their payment method (VA, eWallet, credit card, QRIS).
  *
@@ -18,7 +18,7 @@ import type { InitiatePaymentDto } from '@/modules/schema/paymentsSchema';
 const xenditClient = new Xendit({ secretKey: env.XENDIT_SECRET_KEY });
 
 // =============================================
-// INITIATE PAYMENT — create Xendit Invoice
+// INITIATE PAYMENT create Xendit Invoice
 // =============================================
 export async function initiatePayment(
   dto: InitiatePaymentDto,
@@ -134,7 +134,7 @@ export async function initiatePayment(
 }
 
 // =============================================
-// WEBHOOK HANDLER — Xendit Invoice webhook
+// WEBHOOK HANDLER Xendit Invoice webhook
 // =============================================
 export async function handleWebhook(
   payload: Record<string, unknown>,

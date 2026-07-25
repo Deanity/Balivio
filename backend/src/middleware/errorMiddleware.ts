@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import { env } from '@/config/env';
 
 /**
- * Global error handler — must be the last middleware registered in app.ts.
+ * Global error handler must be the last middleware registered in app.ts.
  * Catches all errors thrown in route handlers.
  */
 export function errorMiddleware(

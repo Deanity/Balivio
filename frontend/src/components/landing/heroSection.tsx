@@ -50,11 +50,11 @@ export function HeroSection() {
 
         {/* Subtitle */}
         <p className="text-base sm:text-lg text-slate-100/90 max-w-2xl font-normal leading-relaxed">
-          Mulai dari villa private pool, retreat pegunungan, hingga cliff top suite — semuanya bisa kamu booking dalam hitungan menit.
+          Mulai dari villa private pool, retreat pegunungan, hingga cliff top suite semuanya bisa kamu booking dalam hitungan menit.
         </p>
 
         {/* Search Bar Container matching 8-point grid layout */}
-        <div className="mt-10 bg-white/95 backdrop-blur-md p-3 sm:p-4 rounded-3xl shadow-2xl border border-white/20 text-slate-900 max-w-4xl">
+        <div className="mt-10 bg-white/95 backdrop-blur-md p-3 sm:p-4 rounded-3xl shadow-2xl border border-white/20 text-slate-900 max-w-7xl">
           <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-9 gap-3 items-center">
             {/* Field 1: Lokasi */}
             <div className="sm:col-span-3 flex items-center gap-3 px-3 py-2 bg-slate-50/80 rounded-2xl border border-slate-200/80 hover:border-[#0D5C54] transition-colors">

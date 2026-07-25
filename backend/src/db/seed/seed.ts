@@ -1,5 +1,5 @@
 /**
- * Seed script — populates master data tables:
+ * Seed script populates master data tables:
  * - areas (5 Bali regions)
  * - property_types (4 types)
  * - amenities (common villa amenities)

@@ -67,7 +67,7 @@ function BookingFlowContent() {
       {/* Top Header & Stepper */}
       <div className="text-center space-y-3">
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-          Pemesanan Villa — {villa.title}
+          Pemesanan Villa {villa.title}
         </h1>
         <p className="text-slate-500 text-sm">
           Selesaikan langkah berikut untuk mendapatkan e-voucher booking terkonfirmasi.

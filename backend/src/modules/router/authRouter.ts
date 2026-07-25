@@ -23,7 +23,7 @@ authRouter.post(
   authController.login
 );
 
-// GET /auth/google — returns Google OAuth redirect URL
+// GET /auth/google returns Google OAuth redirect URL
 authRouter.get('/google', authController.googleOAuth);
 
 // POST /auth/refresh

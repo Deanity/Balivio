@@ -117,7 +117,7 @@ export async function login(dto: LoginDto): Promise<{
 }
 
 // =============================================
-// GOOGLE OAUTH — get redirect URL
+// GOOGLE OAUTH get redirect URL
 // =============================================
 export async function getGoogleOAuthUrl(): Promise<{ url: string }> {
   const { data, error } = await supabaseAdmin.auth.signInWithOAuth({
@@ -182,7 +182,7 @@ export async function logout(accessToken: string): Promise<void> {
 }
 
 // =============================================
-// ME — get current user + profile
+// ME get current user + profile
 // =============================================
 export async function getMe(userId: string): Promise<Record<string, unknown>> {
   const [result] = await db

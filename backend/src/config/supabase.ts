@@ -3,7 +3,7 @@ import ws from 'ws';
 import { env } from './env';
 
 /**
- * Admin client — uses service-role key.
+ * Admin client uses service-role key.
  * Full DB access, bypasses Row Level Security.
  * NEVER expose this to the client.
  *

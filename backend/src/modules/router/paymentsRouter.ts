@@ -10,7 +10,7 @@ export const paymentsRouter = Router();
 // Guest: initiate payment
 paymentsRouter.post('/initiate', authMiddleware, roleGuard(['guest', 'host', 'admin']), validate(initiatePaymentSchema), paymentsController.initiatePayment);
 
-// Xendit webhook — no auth (validated by x-callback-token header)
+// Xendit webhook no auth (validated by x-callback-token header)
 paymentsRouter.post('/webhook', paymentsController.webhook);
 
 // Guest: get payment status

@@ -40,7 +40,7 @@ export default function LoginPage() {
             onClick={handleDemoLogin}
             className="w-full bg-[#0D5C54] hover:bg-[#0A4842] text-white py-3 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 group"
           >
-            <span>Demo Login — Masuk Langsung</span>
+            <span>Demo Login Masuk Langsung</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -49,17 +49,15 @@ export default function LoginPage() {
         <div className="flex border-b border-slate-100 text-xs font-bold text-slate-400">
           <button
             onClick={() => setActiveTab('login')}
-            className={`w-1/2 pb-3 transition-colors ${
-              activeTab === 'login' ? 'text-[#0D5C54] border-b-2 border-[#0D5C54]' : ''
-            }`}
+            className={`w-1/2 pb-3 transition-colors ${activeTab === 'login' ? 'text-[#0D5C54] border-b-2 border-[#0D5C54]' : ''
+              }`}
           >
             Masuk Akun
           </button>
           <button
             onClick={() => setActiveTab('register')}
-            className={`w-1/2 pb-3 transition-colors ${
-              activeTab === 'register' ? 'text-[#0D5C54] border-b-2 border-[#0D5C54]' : ''
-            }`}
+            className={`w-1/2 pb-3 transition-colors ${activeTab === 'register' ? 'text-[#0D5C54] border-b-2 border-[#0D5C54]' : ''
+              }`}
           >
             Daftar Baru
           </button>

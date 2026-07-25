@@ -1,4 +1,4 @@
-# CLAUDE.md — Balivio (Villa Booking Bali)
+# CLAUDE.md Balivio (Villa Booking Bali)
 
 > Catatan: dokumen ini adalah PRD teknis untuk AI coding agent (Claude Code).
 > Tujuannya supaya AI tidak melenceng dari scope: **UI/tampilan saja**, belum backend nyata.
@@ -8,11 +8,11 @@
 ## 1. Project Overview
 
 - **Name**: Balivio
-- **Description**: Platform booking villa premium di Bali. Fase ini hanya membangun **tampilan (frontend UI)** berdasarkan desain yang sudah ada — belum ada backend, database, atau payment gateway sungguhan.
+- **Description**: Platform booking villa premium di Bali. Fase ini hanya membangun **tampilan (frontend UI)** berdasarkan desain yang sudah ada belum ada backend, database, atau payment gateway sungguhan.
 - **Goal**: Mereplikasi seluruh alur visual (landing page → cari villa → detail villa → booking flow → konfirmasi → riwayat booking) menjadi kode Next.js yang rapi, reusable, dan gampang disambungkan ke backend nanti.
 - **Target Users**: Traveler yang mencari private pool villa di Bali (Canggu, Ubud, Seminyak, Uluwatu, dll).
 - **Version**: v0.1.0 (UI-only phase)
-- **Status**: Active development — **Frontend/UI only**, tidak ada integrasi API/backend real.
+- **Status**: Active development **Frontend/UI only**, tidak ada integrasi API/backend real.
 
 > ⚠️ Scope guard untuk AI: Jangan buat database schema, jangan buat auth logic sungguhan, jangan integrasi payment gateway. Semua data pakai **mock/dummy data lokal**. Semua tombol "Login/Booking/Bayar" hanya perlu bekerja secara visual (state lokal + navigasi), bukan transaksi nyata.
 
@@ -23,15 +23,15 @@
 - **Language**: TypeScript
 - **Framework**: Next.js (App Router)
 - **Styling**: Tailwind CSS
-- **UI Library**: shadcn/ui (berbasis Radix UI + Tailwind) — dipilih karena ringan (bukan library besar seperti MUI/Ant Design), komponennya di-copy ke project (bukan dependency tebal), dan gampang dikustom biar terasa elegan sesuai desain (warna teal/hijau tua, banyak whitespace, rounded card).
-- **Animation Library**: Framer Motion — **dipakai terbatas di landing page saja** (hero fade-in, scroll reveal untuk section "Destinasi Populer", "Villa Rekomendasi", "Kenapa Pilih Balivio", testimonial). Halaman lain (search, detail, booking flow) transisi cukup pakai Tailwind transition biasa, jangan overuse animasi di halaman transaksional.
+- **UI Library**: shadcn/ui (berbasis Radix UI + Tailwind) dipilih karena ringan (bukan library besar seperti MUI/Ant Design), komponennya di-copy ke project (bukan dependency tebal), dan gampang dikustom biar terasa elegan sesuai desain (warna teal/hijau tua, banyak whitespace, rounded card).
+- **Animation Library**: Framer Motion **dipakai terbatas di landing page saja** (hero fade-in, scroll reveal untuk section "Destinasi Populer", "Villa Rekomendasi", "Kenapa Pilih Balivio", testimonial). Halaman lain (search, detail, booking flow) transisi cukup pakai Tailwind transition biasa, jangan overuse animasi di halaman transaksional.
 - **Icon Library**: lucide-react (ringan, konsisten dengan shadcn/ui)
 - **Database**: Tidak ada di fase ini
 - **ORM**: Tidak ada di fase ini
-- **Auth**: Tidak ada auth sungguhan — replikasi UI "Mode Demo" (Demo Login → Masuk Langsung) sebagai state lokal saja
-- **State Management**: React state + Context API cukup (hindari Zustand/Redux dulu — project masih kecil, semua data mock)
-- **Data Fetching**: Tidak ada — semua dari file JSON/TS lokal di `src/data`
-- **Package Manager**: pnpm *(asumsi — beri tahu kalau mau ganti npm/yarn/bun)*
+- **Auth**: Tidak ada auth sungguhan replikasi UI "Mode Demo" (Demo Login → Masuk Langsung) sebagai state lokal saja
+- **State Management**: React state + Context API cukup (hindari Zustand/Redux dulu project masih kecil, semua data mock)
+- **Data Fetching**: Tidak ada semua dari file JSON/TS lokal di `src/data`
+- **Package Manager**: pnpm *(asumsi beri tahu kalau mau ganti npm/yarn/bun)*
 - **Deployment**: Vercel
 
 ---
@@ -47,13 +47,13 @@ pnpm lint            # Jalankan linter
 pnpm format          # Format kode (prettier)
 
 # Package Management
-pnpm add [package]   # Install package baru — WAJIB konfirmasi ke user dulu
+pnpm add [package]   # Install package baru WAJIB konfirmasi ke user dulu
 
 # shadcn/ui
 pnpm dlx shadcn@latest add [component]   # Tambah komponen shadcn/ui baru
 ```
 
-> Jangan pakai npm/yarn campur-campur — konsisten pnpm.
+> Jangan pakai npm/yarn campur-campur konsisten pnpm.
 
 ---
 
@@ -64,7 +64,7 @@ Architecture: **by feature/section**, disesuaikan dengan halaman yang ada di des
 ```
 balivio/
   src/
-    app/                        # Next.js App Router (WAJIB pakai nama file reserved: page.tsx, layout.tsx, dll — TIDAK bisa camelCase, ini exception dari framework)
+    app/                        # Next.js App Router (WAJIB pakai nama file reserved: page.tsx, layout.tsx, dll TIDAK bisa camelCase, ini exception dari framework)
       page.tsx                  # Landing page
       searchVilla/page.tsx      # Halaman hasil pencarian & filter villa
       villa/[slug]/page.tsx     # Halaman detail villa
@@ -73,7 +73,7 @@ balivio/
       login/page.tsx            # Login / Register (mode demo)
       layout.tsx
     components/
-      ui/                       # Base komponen dari shadcn/ui (button.tsx, card.tsx, dll — ikut convention shadcn, jangan diubah manual)
+      ui/                       # Base komponen dari shadcn/ui (button.tsx, card.tsx, dll ikut convention shadcn, jangan diubah manual)
       layout/                   # navbar.tsx, footer.tsx
       landing/                  # heroSection.tsx, destinasiPopuler.tsx, villaRekomendasi.tsx, whyBalivio.tsx, testimonialSection.tsx
       villa/                    # villaCard.tsx, villaFilter.tsx, villaGallery.tsx, availabilityCalendar.tsx
@@ -104,7 +104,7 @@ Aturan penempatan file:
 
 ## 5. Naming Conventions
 
-**Aturan khusus project ini: SEMUA nama file pakai camelCase**, kecuali file yang namanya sudah ditentukan oleh Next.js (`page.tsx`, `layout.tsx`, `loading.tsx`, `not-found.tsx`, dll — ini reserved filename, tidak boleh diubah).
+**Aturan khusus project ini: SEMUA nama file pakai camelCase**, kecuali file yang namanya sudah ditentukan oleh Next.js (`page.tsx`, `layout.tsx`, `loading.tsx`, `not-found.tsx`, dll ini reserved filename, tidak boleh diubah).
 
 ```
 # File dan Folder
@@ -137,12 +137,12 @@ Aturan penempatan file:
 
 ```
 # Pendekatan
-- DRY dan komponen reusable — villaCard dipakai di landing, search, dan rekomendasi
+- DRY dan komponen reusable villaCard dipakai di landing, search, dan rekomendasi
 - Prioritaskan keterbacaan, bukan kode paling singkat
 
 # TypeScript
 - Strict mode aktif
-- Tidak boleh pakai tipe 'any' — definisikan tipe di src/types
+- Tidak boleh pakai tipe 'any' definisikan tipe di src/types
 - Selalu tulis return type function secara eksplisit
 - Gunakan interface untuk object (Villa, Booking), type untuk union (BookingStatus)
 
@@ -214,7 +214,7 @@ Aturan penempatan file:
 - Breakpoint standar Tailwind: sm/md/lg/xl
 
 # Dark Mode
-- Tidak ada di desain saat ini — skip dulu, jangan implementasi dark mode kecuali diminta
+- Tidak ada di desain saat ini skip dulu, jangan implementasi dark mode kecuali diminta
 ```
 
 ---
@@ -225,10 +225,10 @@ Aturan penempatan file:
 # Karena fase ini UI-only, tidak ada API & Data Fetching sungguhan
 - Semua data (villa, destinasi, testimonial, booking) disimpan sebagai array/object TypeScript di src/data
 - Simulasikan loading state dengan delay dummy (setTimeout) HANYA jika diminta,
-  supaya skeleton/loading UI kelihatan bagus — bukan untuk fetch data asli
+  supaya skeleton/loading UI kelihatan bagus bukan untuk fetch data asli
 - Struktur data mock harus mengikuti tipe yang didefinisikan di src/types,
   supaya gampang diganti ke API call sungguhan nanti
-- Jangan bikin folder services/api dulu — itu untuk fase backend berikutnya
+- Jangan bikin folder services/api dulu itu untuk fase backend berikutnya
 ```
 
 ---
@@ -242,7 +242,7 @@ Aturan penempatan file:
 3. Context (jika perlu)    : progress booking flow (step 1-3), dipakai di beberapa komponen dalam satu halaman booking
 
 # Jangan
-- Jangan install Zustand/Redux dulu — Context + useState cukup untuk fase UI-only
+- Jangan install Zustand/Redux dulu Context + useState cukup untuk fase UI-only
 - Jangan simpan data yang bisa dihitung ulang (misal total harga dihitung dari subtotal + biaya + pajak, bukan disimpan terpisah)
 ```
 
@@ -254,7 +254,7 @@ Aturan penempatan file:
 # Framer Motion (landing page saja)
 - Gunakan whileInView untuk scroll-reveal section (Destinasi Populer, Villa Rekomendasi, Kenapa Pilih Balivio, Testimonial)
 - Hero section: simple fade-in + slight slide-up saat page load
-- Jangan pasang animasi berat di halaman search/detail/booking — biar terasa cepat & transaksional, bukan playful
+- Jangan pasang animasi berat di halaman search/detail/booking biar terasa cepat & transaksional, bukan playful
 
 # Image
 - Selalu pakai next/image untuk gambar villa, tentukan width/height atau fill dengan container yang jelas
@@ -293,14 +293,14 @@ fix: fix booking stepper active state on mobile
 
 ---
 
-## 13. Pages & Flow (referensi desain — jangan melenceng dari ini)
+## 13. Pages & Flow (referensi desain jangan melenceng dari ini)
 
 ```
 # Sudah ada desainnya (kerjakan sesuai urutan ini)
 - [ ] Landing page: Hero + search bar, Destinasi Populer (4 kota), Villa Rekomendasi,
       "Kenapa pilih Balivio" (4 poin: Harga Terbaik, Free Cancellation, Verified Villa, 24/7 Support),
       Testimonial, Footer
-- [ ] Login/Register page (mode demo — tab Masuk/Daftar, tombol "Demo Login - Masuk Langsung",
+- [ ] Login/Register page (mode demo tab Masuk/Daftar, tombol "Demo Login - Masuk Langsung",
       social login Google/Apple sebagai UI saja)
 - [ ] Search/listing villa: search bar (lokasi, check-in/out, tamu), filter sidebar
       (rentang harga, lokasi, rating minimum, tipe villa), hasil dalam bentuk card
@@ -313,7 +313,7 @@ fix: fix booking stepper active state on mobile
 # Komponen berulang yang dipakai di banyak halaman
 - Navbar (beda state: guest vs logged in "Hi, Demo")
 - Footer (sama persis di semua halaman)
-- villaCard (dipakai di landing, search, rekomendasi — dengan variasi badge promo/best seller/premium)
+- villaCard (dipakai di landing, search, rekomendasi dengan variasi badge promo/best seller/premium)
 ```
 
 ---
@@ -330,23 +330,23 @@ fix: fix booking stepper active state on mobile
 
 ## 15. Do Not
 
-Kalau instruksi ambigu, TANYA DULU sebelum coding — jangan asumsi sendiri.
+Kalau instruksi ambigu, TANYA DULU sebelum coding jangan asumsi sendiri.
 
 ```
 # Scope
 - Jangan bikin backend/API route sungguhan
 - Jangan bikin database schema atau ORM
-- Jangan integrasi payment gateway sungguhan (Midtrans/Xendit dll) — cukup UI pemilihan metode pembayaran
-- Jangan bikin auth/session sungguhan — "Mode Demo" cukup state lokal
+- Jangan integrasi payment gateway sungguhan (Midtrans/Xendit dll) cukup UI pemilihan metode pembayaran
+- Jangan bikin auth/session sungguhan "Mode Demo" cukup state lokal
 
 # Struktur & File
 - Jangan buat folder baru di luar struktur section 4 tanpa konfirmasi
-- Jangan ubah nama file reserved Next.js (page.tsx, layout.tsx) jadi camelCase — itu akan merusak routing
+- Jangan ubah nama file reserved Next.js (page.tsx, layout.tsx) jadi camelCase itu akan merusak routing
 - Jangan install package baru (termasuk library animasi/UI lain) tanpa konfirmasi
 
 # Kode
 - Jangan pakai tipe 'any'
-- Jangan hardcode warna hex berulang-ulang — pakai token di config
+- Jangan hardcode warna hex berulang-ulang pakai token di config
 - Jangan pasang animasi Framer Motion di luar landing page tanpa diminta
 ```
 
@@ -356,7 +356,7 @@ Kalau instruksi ambigu, TANYA DULU sebelum coding — jangan asumsi sendiri.
 
 ```
 Tidak ada environment variable yang dibutuhkan di fase UI-only ini
-(tidak ada API key, database URL, atau auth secret — semua data mock lokal).
+(tidak ada API key, database URL, atau auth secret semua data mock lokal).
 Section ini akan diisi lagi saat project masuk fase integrasi backend.
 ```
 

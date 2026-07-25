@@ -6,7 +6,7 @@ type ValidateTarget = 'body' | 'query' | 'params';
 
 /**
  * validate
- * Zod middleware factory — validates req[target] against schema.
+ * Zod middleware factory validates req[target] against schema.
  * Returns 400 with ZodIssue[] on failure.
  *
  * @example
