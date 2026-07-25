@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:api": "tsx testing/api-test.ts",
     "test:full": "tsx testing/full-system-test.ts",
+    "test:journey": "tsx testing/user-booking-journey.ts",
     "test:unit": "vitest run tests/unit",
     "test:e2e": "vitest run tests/integration",
     "test:cov": "vitest run --coverage"

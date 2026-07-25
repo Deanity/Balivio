@@ -20,7 +20,7 @@ const envSchema = z.object({
 
   // Resend (Email Service)
   RESEND_API_KEY: z.string().default('your_resend_api_key_here'),
-  RESEND_FROM_EMAIL: z.string().email().default('Balivio <noreply@balivio.id>'),
+  RESEND_FROM_EMAIL: z.string().min(1).default('Balivio <noreply@balivio.id>'),
 });
 
 const parsed = envSchema.safeParse(process.env);

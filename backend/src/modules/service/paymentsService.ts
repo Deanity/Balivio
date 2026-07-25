@@ -50,8 +50,12 @@ export async function initiatePayment(
     .where(and(eq(payments.bookingId, dto.bookingId))).limit(1);
 
   if (existing && existing.status === 'pending') {
-    // Return existing pending payment instead of creating a new one
-    return existing as Record<string, unknown>;
+    const gw = (existing.gatewayResponse ?? {}) as Record<string, string>;
+    return {
+      payment: existing,
+      invoiceUrl: gw.invoice_url ?? gw.invoiceUrl ?? '',
+      invoiceId: gw.id ?? '',
+    };
   }
 
   const paymentCode = `PAY-${Date.now()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
