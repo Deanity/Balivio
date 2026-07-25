@@ -68,7 +68,7 @@ export default function VillaDetailPage() {
     <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
       {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-xs font-medium text-slate-500">
-        <Link href="/" className="hover:text-[#0D5C54]">Beranda</Link>
+        <Link href="/dashboard" className="hover:text-[#0D5C54]">Beranda</Link>
         <span>/</span>
         <Link href="/dashboard?tab=search" className="hover:text-[#0D5C54]">Cari Villa</Link>
         <span>/</span>
