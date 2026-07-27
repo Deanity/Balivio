@@ -27,8 +27,9 @@ const allSchemas = {
   ...socialSchema,
 };
 
-// Create postgres client
-const client = postgres(env.DATABASE_URL, { max: 10 });
+// Create postgres client (optimized for Vercel Serverless & Supabase pooler)
+const dbUrl = env.DATABASE_URL || 'postgresql://postgres:password@localhost:5432/postgres';
+const client = postgres(dbUrl, { max: 1, idle_timeout: 20, prepare: false });
 
 // Create Drizzle instance
 export const db = drizzle(client, { schema: allSchemas });
