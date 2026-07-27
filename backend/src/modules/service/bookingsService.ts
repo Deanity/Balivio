@@ -1,9 +1,9 @@
-import { db, bookings, villas, villaAvailability } from '@/db';
+import { db, bookings, villas, villaAvailability } from '../../db';
 import { eq, and, gte, lte, isNull, count } from 'drizzle-orm';
-import { generateBookingCode } from '@/utils/bookingCodeUtils';
-import { parsePagination, buildMeta } from '@/utils/paginationUtils';
+import { generateBookingCode } from '../../utils/bookingCodeUtils';
+import { parsePagination, buildMeta } from '../../utils/paginationUtils';
 import { differenceInDays, eachDayOfInterval, format } from 'date-fns';
-import type { CreateBookingDto } from '@/modules/schema/bookingsSchema';
+import type { CreateBookingDto } from '../schema/bookingsSchema';
 
 const SERVICE_FEE_RATE = 0.10;  // 10%
 const TAX_RATE = 0.11;           // 11%

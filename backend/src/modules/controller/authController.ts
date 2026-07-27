@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as authService from '@/modules/service/authService';
-import { successResponse, errorResponse } from '@/utils/responseUtils';
-import type { RegisterDto, LoginDto, RefreshDto } from '@/modules/schema/authSchema';
+import * as authService from '../service/authService';
+import { successResponse } from '../../utils/responseUtils';
+import type { RegisterDto, LoginDto, RefreshDto } from '../schema/authSchema';
 
 export async function register(
   req: Request,

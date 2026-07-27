@@ -1,8 +1,8 @@
-import { supabaseAdmin } from '@/config/supabase';
-import { db, users, userProfiles } from '@/db';
+import { supabaseAdmin } from '../../config/supabase';
+import { db, users, userProfiles } from '../../db';
 import { eq } from 'drizzle-orm';
-import { env } from '@/config/env';
-import type { RegisterDto, LoginDto, RefreshDto } from '@/modules/schema/authSchema';
+import { env } from '../../config/env';
+import type { RegisterDto, LoginDto, RefreshDto } from '../schema/authSchema';
 
 // =============================================
 // REGISTER

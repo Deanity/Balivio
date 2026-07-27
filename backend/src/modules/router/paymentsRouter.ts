@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as paymentsController from '@/modules/controller/paymentsController';
-import { authMiddleware } from '@/middleware/authMiddleware';
-import { roleGuard } from '@/middleware/roleGuard';
-import { validate } from '@/middleware/validateMiddleware';
-import { initiatePaymentSchema } from '@/modules/schema/paymentsSchema';
+import * as paymentsController from '../controller/paymentsController';
+import { authMiddleware } from '../../middleware/authMiddleware';
+import { roleGuard } from '../../middleware/roleGuard';
+import { validate } from '../../middleware/validateMiddleware';
+import { initiatePaymentSchema } from '../schema/paymentsSchema';
 
 export const paymentsRouter = Router();
 

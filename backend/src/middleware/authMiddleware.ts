@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from 'express';
-import { supabaseAdmin } from '@/config/supabase';
-import { db, users } from '@/db';
+import { supabaseAdmin } from '../config/supabase';
+import { db, users } from '../db';
 import { eq, isNull } from 'drizzle-orm';
-import { errorResponse } from '@/utils/responseUtils';
+import { errorResponse } from '../utils/responseUtils';
 
 /**
  * authMiddleware

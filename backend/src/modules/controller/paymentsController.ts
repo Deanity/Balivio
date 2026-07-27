@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as paymentsService from '@/modules/service/paymentsService';
-import { successResponse } from '@/utils/responseUtils';
-import type { InitiatePaymentDto } from '@/modules/schema/paymentsSchema';
+import * as paymentsService from '../service/paymentsService';
+import { successResponse } from '../../utils/responseUtils';
+import type { InitiatePaymentDto } from '../schema/paymentsSchema';
 
 export async function initiatePayment(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {

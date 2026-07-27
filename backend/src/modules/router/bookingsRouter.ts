@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as bookingsController from '@/modules/controller/bookingsController';
-import { authMiddleware } from '@/middleware/authMiddleware';
-import { roleGuard } from '@/middleware/roleGuard';
-import { validate } from '@/middleware/validateMiddleware';
-import { createBookingSchema } from '@/modules/schema/bookingsSchema';
+import * as bookingsController from '../controller/bookingsController';
+import { authMiddleware } from '../../middleware/authMiddleware';
+import { roleGuard } from '../../middleware/roleGuard';
+import { validate } from '../../middleware/validateMiddleware';
+import { createBookingSchema } from '../schema/bookingsSchema';
 
 export const bookingsRouter = Router();
 

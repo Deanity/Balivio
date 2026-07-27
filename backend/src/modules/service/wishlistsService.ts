@@ -1,4 +1,4 @@
-import { db, wishlists, villas } from '@/db';
+import { db, wishlists, villas } from '../../db';
 import { eq, and, isNull } from 'drizzle-orm';
 
 export async function getWishlist(userId: string): Promise<unknown[]> {

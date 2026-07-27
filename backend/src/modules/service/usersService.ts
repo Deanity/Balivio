@@ -1,7 +1,7 @@
-import { db, users, userProfiles } from '@/db';
+import { db, users, userProfiles } from '../../db';
 import { eq } from 'drizzle-orm';
-import { supabaseAdmin } from '@/config/supabase';
-import type { UpdateProfileDto, ChangePasswordDto } from '@/modules/schema/usersSchema';
+import { supabaseAdmin } from '../../config/supabase';
+import type { UpdateProfileDto, ChangePasswordDto } from '../schema/usersSchema';
 
 export async function getProfile(userId: string): Promise<Record<string, unknown>> {
   const [result] = await db.select({

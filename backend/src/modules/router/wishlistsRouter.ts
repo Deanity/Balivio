@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import * as wishlistsController from '@/modules/controller/wishlistsController';
-import { authMiddleware } from '@/middleware/authMiddleware';
+import * as wishlistsController from '../controller/wishlistsController';
+import { authMiddleware } from '../../middleware/authMiddleware';
 
 export const wishlistsRouter = Router();
 

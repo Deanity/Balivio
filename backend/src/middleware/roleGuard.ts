@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { errorResponse } from '@/utils/responseUtils';
+import { errorResponse } from '../utils/responseUtils';
 
 /**
  * roleGuard

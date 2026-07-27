@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as usersService from '@/modules/service/usersService';
-import { successResponse } from '@/utils/responseUtils';
-import type { UpdateProfileDto, ChangePasswordDto } from '@/modules/schema/usersSchema';
+import * as usersService from '../service/usersService';
+import { successResponse } from '../../utils/responseUtils';
+import type { UpdateProfileDto, ChangePasswordDto } from '../schema/usersSchema';
 
 export async function getProfile(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {

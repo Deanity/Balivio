@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as bookingsService from '@/modules/service/bookingsService';
-import { successResponse, paginatedResponse } from '@/utils/responseUtils';
-import type { CreateBookingDto } from '@/modules/schema/bookingsSchema';
+import * as bookingsService from '../service/bookingsService';
+import { successResponse, paginatedResponse } from '../../utils/responseUtils';
+import type { CreateBookingDto } from '../schema/bookingsSchema';
 
 export async function createBooking(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {

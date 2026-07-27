@@ -1,6 +1,6 @@
-import { db, reviews, bookings } from '@/db';
+import { db, reviews, bookings } from '../../db';
 import { eq, and, isNull } from 'drizzle-orm';
-import type { CreateReviewDto, ReplyReviewDto } from '@/modules/schema/reviewsSchema';
+import type { CreateReviewDto, ReplyReviewDto } from '../schema/reviewsSchema';
 
 export async function createReview(dto: CreateReviewDto, userId: string): Promise<Record<string, unknown>> {
   // Verify booking is completed and belongs to user

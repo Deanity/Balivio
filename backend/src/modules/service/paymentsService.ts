@@ -9,12 +9,12 @@
  */
 
 import { Xendit } from 'xendit-node';
-import { db, payments, bookings, villaAvailability, villas } from '@/db';
+import { db, payments, bookings, villaAvailability, villas, paymentTransferDetails } from '../../db';
 import { eq, and } from 'drizzle-orm';
-import { env } from '@/config/env';
+import { env } from '../../config/env';
 import { eachDayOfInterval, format, differenceInCalendarDays } from 'date-fns';
-import type { InitiatePaymentDto } from '@/modules/schema/paymentsSchema';
-import { sendBookingConfirmationEmail } from '@/utils/emailService';
+import type { InitiatePaymentDto } from '../schema/paymentsSchema';
+import { sendBookingConfirmationEmail } from '../../utils/emailService';
 
 const xenditClient = new Xendit({ secretKey: env.XENDIT_SECRET_KEY });
 
@@ -122,7 +122,6 @@ export async function initiatePayment(
   }).returning();
 
   if (dto.paymentMethod === 'transfer' && payment) {
-    const { paymentTransferDetails } = await import('@/db');
     await db.insert(paymentTransferDetails).values({
       paymentId: payment.id,
       bankName: dto.bankCode ?? 'BCA',

@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as villasService from '@/modules/service/villasService';
-import { successResponse, paginatedResponse } from '@/utils/responseUtils';
-import type { VillaQuery, CreateVillaDto, UpdateVillaDto } from '@/modules/schema/villasSchema';
+import * as villasService from '../service/villasService';
+import { successResponse, paginatedResponse } from '../../utils/responseUtils';
+import type { VillaQuery, CreateVillaDto, UpdateVillaDto } from '../schema/villasSchema';
 
 export async function listVillas(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {

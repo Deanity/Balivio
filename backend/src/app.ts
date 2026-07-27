@@ -4,20 +4,21 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import { env } from '@/config/env';
-import { errorMiddleware } from '@/middleware/errorMiddleware';
+import { env } from './config/env';
+import { errorMiddleware } from './middleware/errorMiddleware';
 
-// Routers
-import { authRouter } from '@/modules/router/authRouter';
-import { villasRouter } from '@/modules/router/villasRouter';
-import { areasRouter } from '@/modules/router/areasRouter';
-import { bookingsRouter } from '@/modules/router/bookingsRouter';
-import { paymentsRouter } from '@/modules/router/paymentsRouter';
-import { reviewsRouter } from '@/modules/router/reviewsRouter';
-import { wishlistsRouter } from '@/modules/router/wishlistsRouter';
-import { usersRouter } from '@/modules/router/usersRouter';
+// Routers & Controllers
+import { authRouter } from './modules/router/authRouter';
+import { villasRouter } from './modules/router/villasRouter';
+import { areasRouter } from './modules/router/areasRouter';
+import { listPropertyTypes, listAmenities } from './modules/controller/areasController';
+import { bookingsRouter } from './modules/router/bookingsRouter';
+import { paymentsRouter } from './modules/router/paymentsRouter';
+import { reviewsRouter } from './modules/router/reviewsRouter';
+import { wishlistsRouter } from './modules/router/wishlistsRouter';
+import { usersRouter } from './modules/router/usersRouter';
 
-// Express App Setup & Routes Setup Configured Ready Final Verified
+// Express App Setup
 const app = express();
 
 // =============================================
@@ -61,17 +62,8 @@ const API_PREFIX = '/api/v1';
 app.use(`${API_PREFIX}/auth`, authRouter);
 app.use(`${API_PREFIX}/villas`, villasRouter);
 app.use(`${API_PREFIX}/areas`, areasRouter);
-app.use(`${API_PREFIX}/property-types`, (req, res, next) => {
-  // Inline handler using areasController
-  import('@/modules/controller/areasController').then(({ listPropertyTypes }) => {
-    listPropertyTypes(req, res, next);
-  });
-});
-app.use(`${API_PREFIX}/amenities`, (req, res, next) => {
-  import('@/modules/controller/areasController').then(({ listAmenities }) => {
-    listAmenities(req, res, next);
-  });
-});
+app.use(`${API_PREFIX}/property-types`, listPropertyTypes);
+app.use(`${API_PREFIX}/amenities`, listAmenities);
 app.use(`${API_PREFIX}/bookings`, bookingsRouter);
 app.use(`${API_PREFIX}/payments`, paymentsRouter);
 app.use(`${API_PREFIX}/reviews`, reviewsRouter);

@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { ZodSchema, ZodError } from 'zod';
-import { errorResponse } from '@/utils/responseUtils';
+import { errorResponse } from '../utils/responseUtils';
 
 type ValidateTarget = 'body' | 'query' | 'params';
 

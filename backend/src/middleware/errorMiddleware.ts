@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { env } from '@/config/env';
+import { env } from '../config/env';
 
 /**
  * Global error handler must be the last middleware registered in app.ts.

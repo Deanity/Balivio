@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as reviewsController from '@/modules/controller/reviewsController';
-import { authMiddleware } from '@/middleware/authMiddleware';
-import { roleGuard } from '@/middleware/roleGuard';
-import { validate } from '@/middleware/validateMiddleware';
-import { createReviewSchema, replyReviewSchema } from '@/modules/schema/reviewsSchema';
+import * as reviewsController from '../controller/reviewsController';
+import { authMiddleware } from '../../middleware/authMiddleware';
+import { roleGuard } from '../../middleware/roleGuard';
+import { validate } from '../../middleware/validateMiddleware';
+import { createReviewSchema, replyReviewSchema } from '../schema/reviewsSchema';
 
 export const reviewsRouter = Router();
 

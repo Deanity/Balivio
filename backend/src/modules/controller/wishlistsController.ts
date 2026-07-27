@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as wishlistsService from '@/modules/service/wishlistsService';
-import { successResponse } from '@/utils/responseUtils';
+import * as wishlistsService from '../service/wishlistsService';
+import { successResponse } from '../../utils/responseUtils';
 
 export async function getWishlist(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {

@@ -1,4 +1,4 @@
-import { db, areas, propertyTypes, amenities } from '@/db';
+import { db, areas, propertyTypes, amenities } from '../../db';
 
 export async function listAreas(): Promise<unknown[]> {
   return db.select().from(areas).orderBy(areas.name);

@@ -1,7 +1,7 @@
-import { db, villas, villaImages, villaAmenities, villaAvailability, reviews, amenities, areas, propertyTypes } from '@/db';
+import { db, villas, villaImages, villaAmenities, villaAvailability, reviews, amenities, areas, propertyTypes } from '../../db';
 import { eq, isNull, and, gte, lte, inArray, notInArray, sql, asc, desc, count } from 'drizzle-orm';
-import { parsePagination, buildMeta } from '@/utils/paginationUtils';
-import type { CreateVillaDto, UpdateVillaDto, VillaQuery } from '@/modules/schema/villasSchema';
+import { parsePagination, buildMeta } from '../../utils/paginationUtils';
+import type { CreateVillaDto, UpdateVillaDto, VillaQuery } from '../schema/villasSchema';
 
 // =============================================
 // LIST VILLAS (with filters)

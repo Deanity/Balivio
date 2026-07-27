@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import * as villasController from '@/modules/controller/villasController';
-import { authMiddleware } from '@/middleware/authMiddleware';
-import { roleGuard } from '@/middleware/roleGuard';
-import { validate } from '@/middleware/validateMiddleware';
+import * as villasController from '../controller/villasController';
+import { authMiddleware } from '../../middleware/authMiddleware';
+import { roleGuard } from '../../middleware/roleGuard';
+import { validate } from '../../middleware/validateMiddleware';
 import {
   createVillaSchema,
   updateVillaSchema,
@@ -10,7 +10,7 @@ import {
   addImageSchema,
   availabilityQuerySchema,
   blockDatesSchema,
-} from '@/modules/schema/villasSchema';
+} from '../schema/villasSchema';
 
 export const villasRouter = Router();
 

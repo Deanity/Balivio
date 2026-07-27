@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as reviewsService from '@/modules/service/reviewsService';
-import { successResponse } from '@/utils/responseUtils';
-import type { CreateReviewDto, ReplyReviewDto } from '@/modules/schema/reviewsSchema';
+import * as reviewsService from '../service/reviewsService';
+import { successResponse } from '../../utils/responseUtils';
+import type { CreateReviewDto, ReplyReviewDto } from '../schema/reviewsSchema';
 
 export async function createReview(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
