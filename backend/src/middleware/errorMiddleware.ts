@@ -19,19 +19,16 @@ export function errorMiddleware(
   let message = 'Internal server error';
 
   if (err instanceof Error) {
-    message = isDev ? err.message : 'Internal server error';
+    message = err.message;
 
     // Known status codes from custom errors
     if ('statusCode' in err && typeof err.statusCode === 'number') {
       statusCode = err.statusCode;
-      message = err.message; // OK to expose app-level errors
     }
   }
 
-  // Never log in test env
-  if (env.NODE_ENV !== 'test') {
-    console.error(`[${req.method}] ${req.path} →`, err);
-  }
+  // Log error details to serverless console
+  console.error(`[${req.method}] ${req.path} →`, err);
 
   res.status(statusCode).json({
     success: false,
