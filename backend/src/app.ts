@@ -27,7 +27,12 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: env.FRONTEND_URL,
+    origin: (origin, callback) => {
+      if (!origin || env.FRONTEND_URL === '*' || origin === env.FRONTEND_URL || origin.endsWith('.vercel.app') || origin.includes('localhost')) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
